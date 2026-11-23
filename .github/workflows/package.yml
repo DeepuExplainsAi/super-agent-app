@@ -1,0 +1,35 @@
+# Release candidates on Windows, macOS and Ubuntu. Unsigned (no secrets). Fails if the license audit fails.
+name: Package
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: windows-latest, script: "package:win", files: "release/*.exe" }
+          - { os: macos-15, script: "package:mac", files: "release/*.dmg" }
+          - { os: ubuntu-24.04, script: "package:linux", files: "release/*.AppImage release/*.deb" }
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - name: License audit (must pass)
+        shell: bash
+        run: node scripts/license-audit.mjs --write licenses.json && node scripts/build-licenses-page.mjs
+      - run: pnpm ${{ matrix.script }}
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: super-agent-${{ matrix.os }}
+          path: ${{ matrix.files }}
+          if-no-files-found: error
