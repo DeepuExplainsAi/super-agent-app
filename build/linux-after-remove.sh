@@ -37,8 +37,8 @@ fi
 # update-alternatives fails on a link group that does not exist.
 if [ "$TEST_MODE" -eq 0 ] && [ "${1:-}" != 0 ]; then
   if command -v update-alternatives >/dev/null 2>&1; then
-    update-alternatives --remove openmausbot /opt/OpenMausBot/openmausbot
-  elif [ -L /usr/bin/openmausbot ] && [ "$(readlink /usr/bin/openmausbot)" = /opt/OpenMausBot/openmausbot ]; then
+    update-alternatives --remove openmausbot /opt/SuperAgent/openmausbot
+  elif [ -L /usr/bin/openmausbot ] && [ "$(readlink /usr/bin/openmausbot)" = /opt/SuperAgent/openmausbot ]; then
     rm -- /usr/bin/openmausbot
   fi
 fi

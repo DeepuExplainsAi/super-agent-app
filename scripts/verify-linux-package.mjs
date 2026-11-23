@@ -474,7 +474,7 @@ function verifySystemPackage(extracted, label, packageType) {
   const desktop = readFileSync(desktopFile, "utf8");
   for (const expected of [
     "Name=Super Agent",
-    "Exec=/opt/OpenMausBot/openmausbot %U",
+    "Exec=/opt/SuperAgent/openmausbot %U",
     "Icon=openmausbot",
     "StartupWMClass=com.openmausbot.app",
     "Categories=Utility;",
