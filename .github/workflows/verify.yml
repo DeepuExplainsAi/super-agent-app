@@ -18,3 +18,27 @@ jobs:
       - run: pnpm build
         env:
           NODE_OPTIONS: --max-old-space-size=6144
+  boot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Server boots, reports OSS edition and no enterprise layer
+        run: |
+          mkdir -p /tmp/sa/home
+          HOME=/tmp/sa/home OMB_DATA_DIR=/tmp/sa/data OMB_PORT=18797 OMB_WEBHOOK_PORT=18796 \
+            OMB_BROWSER_CONNECTION=/tmp/sa/browser-connection.json \
+            node --experimental-strip-types server/index.ts > /tmp/sa/server.log 2>&1 &
+          for i in $(seq 1 90); do curl -sf http://127.0.0.1:18797/api/health >/dev/null && break; sleep 1; done
+          curl -sf http://127.0.0.1:18797/api/health; echo
+          curl -sf http://127.0.0.1:18797/api/edition | tee /tmp/sa/edition.json; echo
+          grep -q '"edition":"oss"' /tmp/sa/edition.json
+          kill %1 || true
+      - name: Server log (always)
+        if: always()
+        run: tail -60 /tmp/sa/server.log || true
