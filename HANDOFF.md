@@ -27,7 +27,9 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 3: theme (`packages/theme`) | DONE (partial vs spec), verify green. `packages/theme/tokens.css` = new `agent` skin (dark, monochrome, Inter font token, rounded radii), imported in src/styles.css, registered in SKIN_IDS (packages/phone-protocol/src/app-settings.ts), SKINS, electron/skin-overlay.cjs, en.json tagline; it is the default dark skin (THEME_SKINS.dark, PRIOR_INSTALL_SKIN). Contrast check passes. NOT DONE: spec step 5 "no hard-coded hex colors left" (many .tsx files still have hex); no Lucide icon swap; font tokens still Geist (Inter token only in agent skin). Low priority polish. |
 | Part 4: `packages/models` | DONE as a library, verify green (typecheck + vitest packages/models). NOT wired into the app yet; NOT tested against real `opencode`/`kiro-cli` binaries (none in CI/sandbox). Upstream already has its own ACP drivers (server/drivers/acp/kiro.ts, opencode-go.ts, core.ts) that the app actually uses; our package is a separate small client + failover. Wiring = Part 4b below. |
 | Part 4b: wire failover into server (use packages/models chain behind a flag), real-binary test by user | pending (do after Part 5/6 or when user asks) |
-| Part 5: `packages/automation` (Playwright MCP, Stagehand, Crawlee, Browser Use optional) | NEXT |
+| Part 5: `packages/automation` | DONE as library, verify green (vitest packages/automation). NOT wired into app yet; real Playwright MCP / browser download not run (sandbox too small) |
+| Part 5b: wire into app (add `playwrightMcpServer()` to default mcpServers, setup panel using `installBrowsers`, run npx via Electron bundled Node), add Stagehand (MIT, verified) / Crawlee (Apache-2.0, verified) | pending |
+| Part 6: Phase 4 extra AI features behind flags | NEXT |
 
 ## Log
 ### Part 1 (done)
@@ -85,3 +87,8 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
   `third_party/cloudflared`, `hpke-js`, `scrcpy` have no LICENSE file: verify before shipping.
 - Upstream has cloud parts to strip in Part 2: `cloudflare/`, `relay/`, `deploy/`, `Dockerfile`, `compose.yaml`,
   Composio broker (`cloudflare/composio-broker`), analytics, cloud computer.
+
+### Part 5 (done)
+- `packages/automation`: `playwrightMcpServer(appData)` (pinned MCP entry), `browsersInstalled/installBrowsers` (first-run download to `<appData>/browsers`), `crawl()` static crawler. Tests in `packages/automation/test`.
+- Bug found by CI: crawler text included `<title>`; fixed (strip `<head>`).
+- Open: Part 5b wiring (above). `npx` needs Node: use Electron's bundled Node.

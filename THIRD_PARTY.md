@@ -23,5 +23,13 @@
 | browser | contains axe-core notice (MPL-2.0): VERIFY |
 | cloudflared, hpke-js, scrcpy | NO LICENSE FILE: VERIFY before shipping |
 
+## Dependencies by reference (not copied)
+| Package | License | Where |
+|---|---|---|
+| @playwright/mcp 0.0.86 | Apache-2.0 | packages/automation (run via npx, pinned) |
+| playwright 1.65.1 | Apache-2.0 | browser download on first run |
+| crawlee 3.18.2 | Apache-2.0 | verified, not added yet |
+| @browserbasehq/stagehand 4.4.0 | MIT | verified (repo LICENSE), not added yet |
+
 ## Excluded on purpose
 - `enterprise/` (OpenMausBot Enterprise License, source-available, not permissive).
