@@ -2,16 +2,14 @@
  "@fontsource-variable/geist": "OFL-1.1 font files, bundled as fonts only (permissive for fonts; keep license text)",
  "@fontsource-variable/geist-mono": "OFL-1.1 font files, as above",
  "@fontsource-variable/inter": "OFL-1.1 font files, as above",
- "@img/sharp-libvips-linux-x64": "LGPL-3.0 native lib used by sharp, dynamically linked and unmodified. DECISION FOR USER: spec allows only permissive licenses; replace sharp or accept LGPL",
  "@novnc/novnc": "MPL-2.0 file-level copyleft, unmodified npm dependency",
  "@resvg/resvg-js": "MPL-2.0, unmodified dependency",
- "@resvg/resvg-js-linux-x64-gnu": "MPL-2.0, unmodified dependency",
  "@ubjs/core": "MPL-2.0, unmodified dependency",
  "@ubjs/node": "MPL-2.0, unmodified dependency",
- "@ubjs/node-linux-x64-gnu": "MPL-2.0, unmodified dependency",
  "lightningcss": "MPL-2.0, unmodified build-time dependency",
- "lightningcss-linux-x64-gnu": "MPL-2.0, unmodified build-time dependency",
- "@trycua/cua-driver-linux-x64-gnu": "MIT AND MPL-2.0 (MPL parts unmodified)",
+ "@trycua/cua-driver": "MIT AND MPL-2.0 (MPL parts unmodified)",
  "elkjs": "EPL-2.0 weak copyleft, unmodified dependency (graph layout)",
- "khroma": "package.json has no license field; repo LICENSE is MIT (checked on GitHub)"
+ "khroma": "package.json has no license field; repo LICENSE is MIT (checked on GitHub)",
+ "@img/sharp": "LGPL-3.0 native libvips bundled with sharp, dynamically linked and unmodified. DECISION FOR USER: spec allows only permissive licenses; replace sharp or accept LGPL",
+ "@img/sharp-libvips": "LGPL-3.0 native libvips bundled with sharp, dynamically linked and unmodified. DECISION FOR USER: spec allows only permissive licenses; replace sharp or accept LGPL"
 }

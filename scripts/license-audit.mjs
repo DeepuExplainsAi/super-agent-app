@@ -10,6 +10,8 @@ const BANNED = /GPL|AGPL|SSPL|Polyform|BUSL|Commons-Clause|Elastic|fair-code/i;
 // Reviewed exceptions: package -> reason. Add here only after reading the package's license.
 const EXCEPTIONS = JSON.parse(readFileSync(new URL("./license-exceptions.json", import.meta.url), "utf8"));
 
+// Native builds come per platform (-linux-x64-gnu, -win32-x64-msvc, -darwin-arm64): one exception covers them all.
+const PLATFORM_SUFFIX = /-(linux|win32|darwin)-[\w-]+$/;
 const problems = [];
 const reviewed = [];
 
@@ -36,7 +38,7 @@ for (const [license, list] of Object.entries(byLicense)) {
     const orAllowed = /\sOR\s/i.test(license) && parts.some((p) => ALLOWED.has(p));
     const ok = parts.every((p) => ALLOWED.has(p)) || orAllowed;
     if (ok) continue;
-    if (EXCEPTIONS[pkg.name]) { reviewed.push(`${pkg.name}: ${license}`); continue; }
+    if (EXCEPTIONS[pkg.name.replace(PLATFORM_SUFFIX, "")]) { reviewed.push(`${pkg.name}: ${license}`); continue; }
     problems.push(`${pkg.name}@${pkg.versions.join(",")}: ${license}${BANNED.test(license) ? " (BANNED)" : " (not on allow list)"}`);
   }
 }
