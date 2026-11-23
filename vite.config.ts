@@ -41,6 +41,7 @@ const include = [
   "packages/models/**/*.test.ts",
   "packages/automation/**/*.test.ts",
   "packages/workflow/**/*.test.ts",
+  "packages/compute/**/*.test.ts",
   "scripts/**/*.test.mjs",
   "scripts/**/*.test.ts",
 ];

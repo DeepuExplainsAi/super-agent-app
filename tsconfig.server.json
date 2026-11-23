@@ -26,7 +26,8 @@
     "companion",
     "packages/models/src",
     "packages/automation/src",
-    "packages/workflow/src"
+    "packages/workflow/src",
+    "packages/compute/src"
   ],
   "exclude": [
     "server/drivers/pi-mcp-extension.ts"
