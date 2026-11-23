@@ -11582,5 +11582,6 @@
   "skillBurger.menu.rename": "Renomear…",
   "skillBurger.card.everyChat": "Todos os chats",
   "skillBurger.page.empty": "Os Skill Burgers dos seus bots aparecem aqui.",
-  "settings.page.superagent": "Automation & models"
+  "settings.page.superagent": "Automation & models",
+  "about.openSource": "Open source licenses"
 }

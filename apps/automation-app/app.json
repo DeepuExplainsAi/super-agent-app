@@ -1,0 +1,1 @@
+{ "name": "Super Agent Automation", "packages": ["@super-agent/theme", "@super-agent/models", "@super-agent/automation", "@super-agent/compute"] }

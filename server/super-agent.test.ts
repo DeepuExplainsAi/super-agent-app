@@ -61,6 +61,16 @@ describe("super agent routes", () => {
     expect((resumed.body.state as { final: { text: string } }).final.text).toBe("hello");
   });
 
+  it("an app profile without a package answers 404 for its routes", async () => {
+    const sa = createSuperAgent({ dataDir: mkdtempSync(join(tmpdir(), "sa-")), mcpServers: () => ({}), persistMcpServers: () => {}, openrouterKey: () => undefined, providers: [], env: { SA_APP: "bot-app" } });
+    const call = (path: string) => callRoute(sa.routes, { method: "GET", path, auth: owner });
+    expect((await call("/api/sa/workflows")).status).toBe(404);
+    expect((await call("/api/sa/automation")).status).toBe(404);
+    expect((await call("/api/sa/models")).status).toBe(200);
+    const names = ((await call("/api/sa/packages")).body.packages as { name: string }[]).map((p) => p.name);
+    expect(names).not.toContain("@super-agent/workflow");
+  });
+
   it("rejects a malformed workflow", async () => {
     expect((await setup().call("PUT", "/api/sa/workflows/x", { id: "x" })).status).toBe(400);
   });

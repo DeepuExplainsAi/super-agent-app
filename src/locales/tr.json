@@ -5963,5 +5963,6 @@
   "memoryPage.thisThread": "Bu konuşma",
   "memoryPage.everywhere": "Her yerde",
   "memoryPage.empty": "Burada henüz hatırlanan bir şey yok. Bilmesini istediğin her şeyi yaz.",
-  "settings.page.superagent": "Automation & models"
+  "settings.page.superagent": "Automation & models",
+  "about.openSource": "Open source licenses"
 }

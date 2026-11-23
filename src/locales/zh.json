@@ -10154,5 +10154,6 @@
   "skillBurger.menu.rename": "重命名…",
   "skillBurger.card.everyChat": "每个聊天",
   "skillBurger.page.empty": "机器人制作的 Skill Burger 会显示在这里。",
-  "settings.page.superagent": "Automation & models"
+  "settings.page.superagent": "Automation & models",
+  "about.openSource": "Open source licenses"
 }

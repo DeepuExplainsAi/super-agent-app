@@ -148,5 +148,9 @@ function WorkflowsGroup() {
 }
 
 export function SuperAgentPage() {
-  return <><ModelsGroup /><AutomationGroup /><JobsGroup /><WorkflowsGroup /></>;
+  const [names, setNames] = useState<string[] | null>(null);
+  useEffect(() => { void api<{ packages: { name: string }[] }>("/api/sa/packages").then((r) => setNames(r.packages.map((p) => p.name)), () => setNames([])); }, []);
+  if (!names) return null;
+  const has = (name: string) => names.includes(`@super-agent/${name}`);
+  return <>{has("models") && <ModelsGroup />}{has("automation") && <AutomationGroup />}{has("compute") && <JobsGroup />}{has("workflow") && <WorkflowsGroup />}</>;
 }

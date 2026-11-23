@@ -73,6 +73,7 @@ export function AboutDialog({ open, onClose }: { open: boolean; onClose: () => v
           <AboutLink href={DOCS_URL} label={t("about.docs")} />
           <AboutLink href={RELEASES_URL} label={t("about.releases")} />
           <AboutLink href={LICENSE_URL} label={t("about.license")} />
+          <AboutLink href={new URL("/licenses.html", window.location.origin).href} label={t("about.openSource")} />
         </div>
         <button
           ref={closeRef}

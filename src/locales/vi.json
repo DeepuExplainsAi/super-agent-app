@@ -5963,5 +5963,6 @@
   "memoryPage.thisThread": "Luồng này",
   "memoryPage.everywhere": "Mọi nơi",
   "memoryPage.empty": "Chưa có gì được ghi nhớ ở đây. Hãy viết bất cứ điều gì bạn muốn nó biết.",
-  "settings.page.superagent": "Automation & models"
+  "settings.page.superagent": "Automation & models",
+  "about.openSource": "Open source licenses"
 }

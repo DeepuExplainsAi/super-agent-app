@@ -1,0 +1,1 @@
+{ "name": "Super Agent Workflow", "packages": ["@super-agent/theme", "@super-agent/models", "@super-agent/workflow", "@super-agent/compute"] }

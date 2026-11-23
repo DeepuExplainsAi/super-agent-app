@@ -8,7 +8,7 @@ import {
 } from "../packages/models/src/index.ts";
 import { createEngine, fileRunStore, webhookAction, type Actions, type WorkflowDef } from "../packages/workflow/src/index.ts";
 import { ownerOrAdmin } from "./request-auth.ts";
-import { PACKAGE_MANIFESTS } from "./sa-packages.ts";
+import { loadedPackages } from "./sa-packages.ts";
 import { PASS, type RouteHandler } from "./routes/table.ts";
 
 export interface SuperAgentDeps {
@@ -18,6 +18,8 @@ export interface SuperAgentDeps {
   openrouterKey(): string | undefined;
   /** Test seam: replaces the real providers. */
   providers?: ModelProvider[];
+  /** Test seam: the environment that holds SA_APP. */
+  env?: NodeJS.ProcessEnv;
 }
 
 const ID = /^[\w-]{1,64}$/;
@@ -70,9 +72,14 @@ export function createSuperAgent(deps: SuperAgentDeps) {
     if (!path.startsWith("/api/sa/")) return PASS;
     if (!ownerOrAdmin(auth)) return json(res, 403, { error: "Owner only." });
     await loaded;
+    const loadedNames = new Set(loadedPackages(deps.env).map((m) => m.name));
+    const needs = (name: string) => loadedNames.has(`@super-agent/${name}`);
+    const group = /^\/api\/sa\/(automation|crawl|jobs|workflows|runs|models)/.exec(path)?.[1];
+    const owner = group && { automation: "automation", crawl: "automation", jobs: "compute", workflows: "workflow", runs: "workflow", models: "models" }[group]!;
+    if (owner && !needs(owner)) return json(res, 404, { error: "This app does not include that package." });
     const body = async () => (await readBody(req)) ?? {};
 
-    if (path === "/api/sa/packages" && method === "GET") return json(res, 200, { packages: PACKAGE_MANIFESTS });
+    if (path === "/api/sa/packages" && method === "GET") return json(res, 200, { packages: loadedPackages(deps.env) });
 
     if (path === "/api/sa/automation" && method === "GET") {
       return json(res, 200, { browsersInstalled: browsersInstalled(deps.dataDir), playwrightEnabled: "playwright" in deps.mcpServers(), install: progress.get("install") ?? [] });

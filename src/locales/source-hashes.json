@@ -4199,7 +4199,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "es": {
       "whop.description": "1a07cf04ef17029448d3781415cbac16d54e66b821907a40d94e0e6349710e70",
@@ -10671,7 +10672,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "fr": {
       "pro.seePlans": "30d9abfd7c7af513814bdfadcafe7ec4a90bc6bcee519086dc513f63f2cd7384",
@@ -14548,7 +14550,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "hi": {
       "pro.seePlans": "30d9abfd7c7af513814bdfadcafe7ec4a90bc6bcee519086dc513f63f2cd7384",
@@ -18277,7 +18280,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "ja": {
       "whop.description": "1a07cf04ef17029448d3781415cbac16d54e66b821907a40d94e0e6349710e70",
@@ -26284,7 +26288,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "pt-br": {
       "voice.gemini.keyPlaceholder": "8c87ba2043a4a89d63c90cae8a6dafd5cbd193652e923b97988e381a74773e10",
@@ -37870,7 +37875,8 @@
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
       "template.signInToPublish": "e06cdacae860555c738ab74e1b82a2ec56b2a293658b2f36ecba930d35cac0f8",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "zh": {
       "pro.seePlans": "30d9abfd7c7af513814bdfadcafe7ec4a90bc6bcee519086dc513f63f2cd7384",
@@ -48028,7 +48034,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "zh-tw": {
       "whop.description": "1a07cf04ef17029448d3781415cbac16d54e66b821907a40d94e0e6349710e70",
@@ -58285,7 +58292,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "uk": {
       "pro.seePlans": "30d9abfd7c7af513814bdfadcafe7ec4a90bc6bcee519086dc513f63f2cd7384",
@@ -62434,7 +62442,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "vi": {
       "whop.description": "1a07cf04ef17029448d3781415cbac16d54e66b821907a40d94e0e6349710e70",
@@ -68401,7 +68410,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "tr": {
       "whop.description": "1a07cf04ef17029448d3781415cbac16d54e66b821907a40d94e0e6349710e70",
@@ -74368,7 +74378,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "pl": {
       "whop.description": "1a07cf04ef17029448d3781415cbac16d54e66b821907a40d94e0e6349710e70",
@@ -81536,7 +81547,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "ru": {
       "whop.description": "1a07cf04ef17029448d3781415cbac16d54e66b821907a40d94e0e6349710e70",
@@ -88758,7 +88770,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "it": {
       "whop.description": "1a07cf04ef17029448d3781415cbac16d54e66b821907a40d94e0e6349710e70",
@@ -100118,7 +100131,8 @@
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
       "template.signInToPublish": "e06cdacae860555c738ab74e1b82a2ec56b2a293658b2f36ecba930d35cac0f8",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     },
     "ko": {
       "connectedWorkspaces.localTitle": "7d6deafeab011d734c3fdd1bfd6f69544fbb746a004019269bdb48544b01164b",
@@ -107815,7 +107829,8 @@
       "phoneUpdate.title": "4d6b3948b1cae1b7bad39ca62d85b2eaaf7a44226286c1a842283a149e803b50",
       "phoneUpdate.body": "73442ea78a5f882e837ca98800f51805879183e076227292e7c4682d6cfcb1e2",
       "phoneUpdate.bodyMany": "05dea71ca3da9c00b39905a73e95c013d3330512f5e764c952b72751829a9a60",
-      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61"
+      "settings.page.superagent": "8b5cec8a420d59a244f0044145ea3be51edd64dc38788994d59057a60411ad61",
+      "about.openSource": "1a1b83db3be86706f921f8a90defcb6a13ac3210e95390799c5f80ab7bbb23d7"
     }
   }
 }

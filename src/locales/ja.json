@@ -8003,5 +8003,6 @@
   "skillBurger.card.everyChat": "すべてのチャット",
   "skillBurger.page.empty": "ボットが作った Skill Burger はここに表示されます。",
   "chat.notice.savedToThread": "このスレッドに保存しました",
-  "settings.page.superagent": "Automation & models"
+  "settings.page.superagent": "Automation & models",
+  "about.openSource": "Open source licenses"
 }

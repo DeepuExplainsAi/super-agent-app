@@ -6468,5 +6468,6 @@
   "memoryPage.thisThread": "Este hilo",
   "memoryPage.everywhere": "En todas partes",
   "memoryPage.empty": "Aquí todavía no hay nada guardado. Escribe lo que quieras que sepa.",
-  "settings.page.superagent": "Automation & models"
+  "settings.page.superagent": "Automation & models",
+  "about.openSource": "Open source licenses"
 }

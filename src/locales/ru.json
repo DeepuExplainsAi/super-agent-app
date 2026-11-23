@@ -7218,5 +7218,6 @@
   "skillBurger.card.everyChat": "Каждый чат",
   "skillBurger.page.empty": "Здесь появляются Skill Burger ваших ботов.",
   "chat.notice.savedToThread": "Сохранено в этой ветке",
-  "settings.page.superagent": "Automation & models"
+  "settings.page.superagent": "Automation & models",
+  "about.openSource": "Open source licenses"
 }
