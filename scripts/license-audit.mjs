@@ -25,7 +25,7 @@ for (const dir of ["enterprise", "ee"]) {
   }
 }
 
-const raw = execFileSync("pnpm", ["licenses", "list", "--prod", "--json"], { encoding: "utf8", maxBuffer: 1 << 28 });
+const raw = execFileSync("pnpm", ["licenses", "list", "--prod", "--json"], { encoding: "utf8", maxBuffer: 1 << 28, shell: process.platform === "win32" });
 const byLicense = JSON.parse(raw);
 const packages = [];
 for (const [license, list] of Object.entries(byLicense)) {
