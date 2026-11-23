@@ -15,4 +15,4 @@ Rule: after each part -> commit, push, update HANDOFF.md, push. Continue without
 
 - [x] Part 6: Phase 4 `packages/workflow` library (engine, approval, retries, restart-safe). UI editor + real actions pending (6b)
 - [x] Part 7: Phase 5 gap note (`docs/feature-gap.md`: base already has memory/routines/groups/voice/local models) + Phase 6 `packages/compute` library
-- [~] Part 8: Phase 7: license audit (done, green), package matrix workflow `package.yml` (running; see HANDOFF), licenses page generator (done)
+- [~] (BLOCKED: GitHub billing) Part 8: Phase 7: license audit (done, green), package matrix workflow `package.yml` (running; see HANDOFF), licenses page generator (done)
