@@ -11,6 +11,7 @@ const BANNED = /GPL|AGPL|SSPL|Polyform|BUSL|Commons-Clause|Elastic|fair-code/i;
 const EXCEPTIONS = JSON.parse(readFileSync(new URL("./license-exceptions.json", import.meta.url), "utf8"));
 
 const problems = [];
+const reviewed = [];
 
 for (const dir of ["enterprise", "ee"]) {
   const stack = ["."];
@@ -30,10 +31,12 @@ const packages = [];
 for (const [license, list] of Object.entries(byLicense)) {
   for (const pkg of list) {
     packages.push({ name: pkg.name, versions: pkg.versions, license, author: pkg.author ?? "", homepage: pkg.homepage ?? "" });
-    const parts = license.replace(/[()]/g, "").split(/\s+(?:OR|AND)\s+/i);
+    const spdx = license === "Apache 2.0" ? "Apache-2.0" : license;
+    const parts = spdx.replace(/[()]/g, "").split(/\s+(?:OR|AND)\s+/i);
     const orAllowed = /\sOR\s/i.test(license) && parts.some((p) => ALLOWED.has(p));
     const ok = parts.every((p) => ALLOWED.has(p)) || orAllowed;
-    if (ok || EXCEPTIONS[pkg.name]) continue;
+    if (ok) continue;
+    if (EXCEPTIONS[pkg.name]) { reviewed.push(`${pkg.name}: ${license}`); continue; }
     problems.push(`${pkg.name}@${pkg.versions.join(",")}: ${license}${BANNED.test(license) ? " (BANNED)" : " (not on allow list)"}`);
   }
 }
@@ -41,6 +44,7 @@ for (const [license, list] of Object.entries(byLicense)) {
 const out = process.argv.indexOf("--write");
 if (out > 0) writeFileSync(process.argv[out + 1], JSON.stringify(packages.sort((a, b) => a.name.localeCompare(b.name)), null, 1));
 
+console.log(`${reviewed.length} reviewed exceptions (scripts/license-exceptions.json)`);
 console.log(`${packages.length} production packages checked`);
 if (problems.length) {
   console.error(`LICENSE AUDIT FAILED (${problems.length}):\n${problems.join("\n")}`);
