@@ -25,7 +25,9 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 2e: rename + remove mascot | MOSTLY DONE, verify green. Display name = "Super Agent" (locales, index.html, brand.ts, electron-builder.yml appId app.superagent.desktop, artifactName SuperAgent-*), new star icon (build/, public/), mascot images in src/assets/mausbot-steel replaced by star. LEFT: mascot React components still exist (CursorAvatar, CarvedAvatar, MausBotWelcome...), identifiers/env/protocol `openmausbot://`, `~/.openmausbot`, `OMB_*` intentionally kept (internal; renaming is risky); docs/ and apps/docs still say OpenMausBot; src/assets/bubblav + whop logos (third-party brands) unreviewed. |
 | Part 2f: final build + boot smoke | DONE: verify has `build` and `boot` jobs, both green (server boots, /api/edition = oss). NOT DONE: live API-key chat (needs user's key; see below) |
 | Part 3: theme (`packages/theme`) | DONE (partial vs spec), verify green. `packages/theme/tokens.css` = new `agent` skin (dark, monochrome, Inter font token, rounded radii), imported in src/styles.css, registered in SKIN_IDS (packages/phone-protocol/src/app-settings.ts), SKINS, electron/skin-overlay.cjs, en.json tagline; it is the default dark skin (THEME_SKINS.dark, PRIOR_INSTALL_SKIN). Contrast check passes. NOT DONE: spec step 5 "no hard-coded hex colors left" (many .tsx files still have hex); no Lucide icon swap; font tokens still Geist (Inter token only in agent skin). Low priority polish. |
-| Part 4: `packages/models` | NEXT |
+| Part 4: `packages/models` | DONE as a library, verify green (typecheck + vitest packages/models). NOT wired into the app yet; NOT tested against real `opencode`/`kiro-cli` binaries (none in CI/sandbox). Upstream already has its own ACP drivers (server/drivers/acp/kiro.ts, opencode-go.ts, core.ts) that the app actually uses; our package is a separate small client + failover. Wiring = Part 4b below. |
+| Part 4b: wire failover into server (use packages/models chain behind a flag), real-binary test by user | pending (do after Part 5/6 or when user asks) |
+| Part 5: `packages/automation` (Playwright MCP, Stagehand, Crawlee, Browser Use optional) | NEXT |
 
 ## Log
 ### Part 1 (done)
@@ -71,6 +73,12 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 - verify.yml now also runs `node scripts/generate-locale.mjs --check` and `node scripts/check-skin-contrast.mjs`.
 - Rename changed English strings, so locale hashes were re-recorded (translations already contained the new name). it.json `agentcard.notice` was corrupt upstream; removed (falls back to English).
 - Local verify without install: `node scripts/check-skin-contrast.mjs` and `node scripts/generate-locale.mjs --check` run fine in the sandbox.
+
+### Part 4 (done)
+- `packages/models/src`: types.ts (ModelProvider, ProviderError, FAILOVER_KINDS), openai-compat.ts, openrouter.ts, localai.ts (loopback only), acp.ts (JSON-RPC stdio client; permission requests go to `onPermission`, no handler = deny), failover.ts (cooldown 5 min, notice event, no switch after text streamed, skip not-signed-in), tests in packages/models/test.
+- tsconfig.server.json includes `packages/models/src`; vite.config.ts test include has `packages/models/**/*.test.ts`; verify.yml runs them.
+- ACP wire details (initialize params, session/new, session/set_model) follow the ACP spec from memory and upstream core.ts; unverified against live binaries.
+- Also removed stale `enterprise/**` and `connector/**` entries from vite test include.
 
 ## Notes for next agent
 - `third_party/` already holds vendored code (hermes-agent, opencode, puppeteer, ...): licenses listed in THIRD_PARTY.md.
