@@ -1,5 +1,6 @@
 // Import first: it reads a Cloud home's secrets off the launcher's pipe before any module can start a process.
 import { BOOT_CLOUD_SECRETS } from "./cloud-secrets-boot.ts";
+import { createSuperAgent } from "./super-agent.ts";
 import { startFailureText } from "./start-failure-text.ts";
 import { reserveGmailDrafts } from "./gmail-draft-policy.ts";
 import { createGmailDrafts } from "./host/gmail-drafts.ts";
@@ -12252,6 +12253,7 @@ ROUTES.push(createMcpServerRoutes({
   cloudHome: CLOUD_HOME,
   fallbackPublicUrl: FALLBACK_PUBLIC_URL,
   mcpServerResponse, savedCustomDomain, appCatalog: chatAppsMcp, config: mcpConfig, lender: sessionLendingPrincipal, connectionHealth, ownsVault: () => !CLOUD_TEAM && !HOSTED_WORKSPACE, place: (server, auth) => lentMcp.place(server, { principal: sessionLendingPrincipal(auth), ...(auth.kind === "session" ? { session: auth.session.id } : {}), newest: true }) }));
+ROUTES.push(createSuperAgent({ dataDir: DATA_DIR, mcpServers: () => cfg.mcpServers ?? {}, persistMcpServers: persistAnnouncedMcpServers, openrouterKey: () => cfg.openrouter?.key?.trim() || undefined }).routes);
 ROUTES.push(createSetupImportRoutes({ local: DESKTOP_MANAGED && !CLOUD_HOME && !HOSTED_WORKSPACE, cfg, mcpPolicyRefusal, persistMcpServers: persistAnnouncedMcpServers,
   mcpConfigBusy: mcpConfig.busy, store }));
 ROUTES.push(createComputerRoutes({

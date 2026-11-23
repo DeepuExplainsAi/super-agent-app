@@ -1,0 +1,7 @@
+{
+  "name": "@super-agent/workflow",
+  "version": "0.1.0",
+  "tools": ["workflow-run"],
+  "uiPanels": ["workflows"],
+  "needs": []
+}
