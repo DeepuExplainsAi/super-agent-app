@@ -20,8 +20,8 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 1: copy OpenMausBot, delete enterprise/ | DONE, pushed 4f8de7b |
 | Part 2a: audit -> `docs/phase0-audit.md` | DONE, pushed |
 | Part 2b: baseline build | DONE: CI `verify` workflow green (install, typecheck, build) |
-| Part 2c: remove enterprise refs | NEXT |
-| Part 2d: remove cloud/telemetry/Composio | pending |
+| Part 2c: remove enterprise refs | DONE, verify green (server/enterprise.ts is now a stub; enterprise CI/CLA/tests removed) |
+| Part 2d: remove cloud/telemetry/Composio | NEXT (do in sub-steps: analytics, updater, composio, cloud modules, relay/companion/deploy dirs) |
 | Part 2e: rename + remove mascot | pending |
 | Part 2f: final build + one API-key chat check | pending |
 
@@ -43,6 +43,12 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
   (typecheck + build, NODE_OPTIONS heap 6 GB). Use `export COREPACK_ENABLE_DOWNLOAD_PROMPT=0` if running pnpm.
 - Git commit identity: `git -c user.name=DeepuExplainsAi -c user.email=deepu@users.noreply.github.com commit`.
 - Upstream CI (`ci.yml`) also runs on push and has failed on part2a (not investigated; upstream-specific jobs). Ignore until Part 2f; `verify` is the gate.
+
+### Part 2c (done)
+- `server/enterprise.ts` stub keeps hosted-workspace config helpers (refuses OMB_ADMIN_* config, no adapter), `entitled()` always false.
+- Removed: enterprise tests, contributors.yml, docker.yml, CLA.md, ci.yml `foss` job, LICENSING.md rewritten.
+- `src/components/LicenseExpiryBanner.tsx` still exists (inert); remove in 2e/cleanup.
+- Local vitest NOT run (sandbox too small). Run `pnpm test` subset in a CI job when needed; `verify` only does typecheck+build.
 
 ## Notes for next agent
 - `third_party/` already holds vendored code (hermes-agent, opencode, puppeteer, ...): licenses listed in THIRD_PARTY.md.
