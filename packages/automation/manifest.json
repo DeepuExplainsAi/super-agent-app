@@ -1,0 +1,19 @@
+{
+  "name": "@super-agent/automation",
+  "version": "0.1.0",
+  "tools": ["playwright-mcp", "crawl"],
+  "uiPanels": ["browser-setup"],
+  "needs": ["playwright-browsers"],
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@0.0.86", "--isolated"],
+      "env": { "PLAYWRIGHT_BROWSERS_PATH": "${APP_DATA}/browsers" }
+    }
+  },
+  "optional": {
+    "stagehand": { "package": "@browserbasehq/stagehand", "license": "MIT", "role": "AI act/extract; needs the user's own model key" },
+    "browser-use": { "license": "MIT", "role": "Python sidecar, only if bundled self-contained (not in the installer by default)" },
+    "crawl4ai": { "license": "Apache-2.0 + attribution", "role": "Python sidecar, optional; About screen must credit it" }
+  }
+}

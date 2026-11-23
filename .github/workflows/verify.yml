@@ -17,7 +17,7 @@ jobs:
       - run: node scripts/generate-locale.mjs --check
       - run: node scripts/check-skin-contrast.mjs
       - run: pnpm typecheck
-      - run: pnpm exec vitest run packages/models
+      - run: pnpm exec vitest run packages/models packages/automation
       - run: pnpm build
         env:
           NODE_OPTIONS: --max-old-space-size=6144

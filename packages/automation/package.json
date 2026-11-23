@@ -1,0 +1,9 @@
+{
+  "name": "@super-agent/automation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "Browser automation + crawling tools for Super Agent bots (Playwright MCP, Crawlee).",
+  "exports": { ".": "./src/index.ts" }
+}
