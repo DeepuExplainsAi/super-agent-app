@@ -17,7 +17,7 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 ## Status
 | Part | Status |
 |---|---|
-| Part 1: copy OpenMausBot, delete enterprise/ | DONE (see log) |
+| Part 1: copy OpenMausBot, delete enterprise/ | DONE, pushed 4f8de7b |
 | Part 2: Phase 0 steps 1,4,5,6 (audit, rename, remove cloud, build) | NEXT |
 
 ## Log
