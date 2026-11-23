@@ -33,7 +33,7 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 7: Phase 5 gap note + Phase 6 `packages/compute` | DONE, verify green. No `packages/agents` created: gap note shows base already covers the features; CrewAI/AutoGen/MetaGPT/OpenHands/Aider deliberately not added (see docs/feature-gap.md) |
 | Part 8: Phase 7 packaging | PARTLY: `scripts/license-audit.mjs` (+`license-exceptions.json`) runs in verify.yml, green. `package.yml` matrix (win/mac/linux, manual) added; check its latest run with `gh run list -w package`. `scripts/build-licenses-page.mjs` writes `public/licenses.html` (not linked from UI yet) |
 | BLOCKER (still on after repo went PUBLIC) | GitHub Actions stopped: "recent account payments have failed or your spending limit needs to be increased" (private repo minutes used up, mostly by the package matrix). No CI verification is possible until the user fixes Settings > Billing, or makes the repo public (free minutes). Last verified-green commit: part8-9 era verify. Unverified since: part8-10 (artifact glob only). |
-| Part 9: wiring (4b, 5b, 6b, compute UI), user decision on sharp LGPL, rename/brand cleanup | NEXT |
+| Part 9: wiring | PARTLY DONE, verify green. DONE: `server/super-agent.ts` (/api/sa/*: packages, automation, crawl, jobs, workflows, models failover; owner-only; tests server/super-agent.test.ts), manifests for all packages + `server/sa-packages.ts`, Settings page "Automation & models" (`src/components/settings/pages/SuperAgentPage.tsx`: failover order + test chat, browser download, Playwright MCP switch, crawl, jobs+limits, JSON workflow editor with approvals). NOT DONE: failover as a real chat driver for bots (4b), Stagehand/Crawlee (5b), sharp decision, brand cleanup, Part 10 split apps, release |
 
 ## Log
 ### Part 1 (done)
@@ -121,3 +121,11 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 - Actions still fail with 0 steps: "recent account payments have failed or your spending limit needs to be increased". Account-level; the user must fix GitHub Settings > Billing & plans (payment method). After that: run `gh workflow run verify.yml`, then `package.yml` once.
 - UPDATE 2026-11-23: CI WORKS AGAIN (repo public, free minutes). verify green on 75549da (run 45229823544). Part 9 is unblocked.
 - (obsolete) Until CI works, do NOT start Part 9 wiring (no way to typecheck in the 0.5 GB sandbox). Unverified commits since last green verify: part8-10, handoff commits only (workflow glob + docs).
+
+### Part 9 (partly done)
+- All new routes live in `server/super-agent.ts`, pushed on ROUTES from server/index.ts next to createSetupImportRoutes. Data under `<DATA_DIR>/super-agent/` (workflows/, runs/, super-agent.json).
+- Workflow actions registered: `model` (failover chain), `crawl`, `webhook`. Runs survive restart (tested with a second instance).
+- Playwright MCP switch writes `mcpServers.playwright` into config (needs `npx`/Node on PATH; on a packaged app without Node this fails until Electron-Node wiring is done).
+- Failover chain is reachable only via the test box + workflow `model` action, NOT as a bot engine yet.
+- Page labels (except the nav label) are English-only strings.
+- verify now also runs `vitest run src/locales src/components/settings`.
