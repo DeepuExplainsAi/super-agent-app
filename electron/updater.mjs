@@ -189,8 +189,11 @@ export function attachUpdaterWindow(mainWindow) {
 }
 
 /** `signals` (quietSignals): what tells a quiet moment; without them a downloaded update installs only on Restart or quit. */
+const UPDATES_DISABLED = true;
+
 export function startUpdater(signals = null) {
-  if (!app.isPackaged) {
+  // Auto-update is disabled in this build: it would fetch upstream OpenMausBot releases. Revisit when we publish our own.
+  if (UPDATES_DISABLED || !app.isPackaged) {
     updaterCoordinator = null;
     setState({ status: "idle" });
     return;
