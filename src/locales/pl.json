@@ -7163,5 +7163,6 @@
   "skillBurger.menu.rename": "Zmień nazwę…",
   "skillBurger.card.everyChat": "Każdy czat",
   "skillBurger.page.empty": "Tu pojawiają się Skill Burgery Twoich botów.",
-  "chat.notice.savedToThread": "Zapisano w tym wątku"
+  "chat.notice.savedToThread": "Zapisano w tym wątku",
+  "settings.page.superagent": "Automation & models"
 }

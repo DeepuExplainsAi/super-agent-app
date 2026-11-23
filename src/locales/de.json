@@ -4195,5 +4195,6 @@
   "chat.notice.savedToThread": "In diesem Thread gespeichert",
   "memoryPage.thisThread": "Dieser Thread",
   "memoryPage.everywhere": "Überall",
-  "memoryPage.empty": "Hier ist noch nichts gespeichert. Schreib alles auf, was er wissen soll."
+  "memoryPage.empty": "Hier ist noch nichts gespeichert. Schreib alles auf, was er wissen soll.",
+  "settings.page.superagent": "Automation & models"
 }

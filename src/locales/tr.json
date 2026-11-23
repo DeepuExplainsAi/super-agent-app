@@ -5962,5 +5962,6 @@
   "chat.notice.savedToThread": "Bu konuşmaya kaydedildi",
   "memoryPage.thisThread": "Bu konuşma",
   "memoryPage.everywhere": "Her yerde",
-  "memoryPage.empty": "Burada henüz hatırlanan bir şey yok. Bilmesini istediğin her şeyi yaz."
+  "memoryPage.empty": "Burada henüz hatırlanan bir şey yok. Bilmesini istediğin her şeyi yaz.",
+  "settings.page.superagent": "Automation & models"
 }

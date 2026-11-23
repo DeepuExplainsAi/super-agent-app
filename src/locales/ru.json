@@ -7217,5 +7217,6 @@
   "skillBurger.menu.rename": "Переименовать…",
   "skillBurger.card.everyChat": "Каждый чат",
   "skillBurger.page.empty": "Здесь появляются Skill Burger ваших ботов.",
-  "chat.notice.savedToThread": "Сохранено в этой ветке"
+  "chat.notice.savedToThread": "Сохранено в этой ветке",
+  "settings.page.superagent": "Automation & models"
 }

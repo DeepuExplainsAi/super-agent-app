@@ -4144,5 +4144,6 @@
   "chat.notice.savedToThread": "Збережено в цій гілці",
   "memoryPage.thisThread": "Ця гілка",
   "memoryPage.everywhere": "Усюди",
-  "memoryPage.empty": "Тут поки нічого не запам'ятано. Напишіть усе, що він має знати."
+  "memoryPage.empty": "Тут поки нічого не запам'ятано. Напишіть усе, що він має знати.",
+  "settings.page.superagent": "Automation & models"
 }

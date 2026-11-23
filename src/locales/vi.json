@@ -5962,5 +5962,6 @@
   "chat.notice.savedToThread": "Đã lưu vào luồng này",
   "memoryPage.thisThread": "Luồng này",
   "memoryPage.everywhere": "Mọi nơi",
-  "memoryPage.empty": "Chưa có gì được ghi nhớ ở đây. Hãy viết bất cứ điều gì bạn muốn nó biết."
+  "memoryPage.empty": "Chưa có gì được ghi nhớ ở đây. Hãy viết bất cứ điều gì bạn muốn nó biết.",
+  "settings.page.superagent": "Automation & models"
 }

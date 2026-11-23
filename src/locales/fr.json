@@ -3872,5 +3872,6 @@
   "chat.notice.savedToThread": "Enregistré dans ce fil",
   "memoryPage.thisThread": "Ce fil",
   "memoryPage.everywhere": "Partout",
-  "memoryPage.empty": "Rien n'est encore retenu ici. Écrivez tout ce que vous voulez qu'il sache."
+  "memoryPage.empty": "Rien n'est encore retenu ici. Écrivez tout ce que vous voulez qu'il sache.",
+  "settings.page.superagent": "Automation & models"
 }

@@ -11355,5 +11355,6 @@
   "skillBurger.menu.aria": "Altro per {name}",
   "skillBurger.menu.rename": "Rinomina…",
   "skillBurger.card.everyChat": "Ogni chat",
-  "skillBurger.page.empty": "Qui compaiono gli Skill Burger dei tuoi bot."
+  "skillBurger.page.empty": "Qui compaiono gli Skill Burger dei tuoi bot.",
+  "settings.page.superagent": "Automation & models"
 }

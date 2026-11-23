@@ -11582,5 +11582,6 @@
   "skillBurger.menu.aria": "More for {name}",
   "skillBurger.menu.rename": "Rename…",
   "skillBurger.card.everyChat": "Every chat",
-  "skillBurger.page.empty": "Skill Burgers your bots make show up here."
+  "skillBurger.page.empty": "Skill Burgers your bots make show up here.",
+  "settings.page.superagent": "Automation & models"
 }

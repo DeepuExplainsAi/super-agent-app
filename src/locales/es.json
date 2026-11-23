@@ -6467,5 +6467,6 @@
   "chat.notice.savedToThread": "Guardado en este hilo",
   "memoryPage.thisThread": "Este hilo",
   "memoryPage.everywhere": "En todas partes",
-  "memoryPage.empty": "Aquí todavía no hay nada guardado. Escribe lo que quieras que sepa."
+  "memoryPage.empty": "Aquí todavía no hay nada guardado. Escribe lo que quieras que sepa.",
+  "settings.page.superagent": "Automation & models"
 }

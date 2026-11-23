@@ -3724,5 +3724,6 @@
   "chat.notice.savedToThread": "इस थ्रेड में सहेजा गया",
   "memoryPage.thisThread": "यह थ्रेड",
   "memoryPage.everywhere": "हर जगह",
-  "memoryPage.empty": "यहाँ अभी कुछ याद नहीं रखा गया है। जो भी आप चाहते हैं कि यह जाने, लिखें।"
+  "memoryPage.empty": "यहाँ अभी कुछ याद नहीं रखा गया है। जो भी आप चाहते हैं कि यह जाने, लिखें।",
+  "settings.page.superagent": "Automation & models"
 }

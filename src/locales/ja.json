@@ -8002,5 +8002,6 @@
   "skillBurger.menu.rename": "名前を変更…",
   "skillBurger.card.everyChat": "すべてのチャット",
   "skillBurger.page.empty": "ボットが作った Skill Burger はここに表示されます。",
-  "chat.notice.savedToThread": "このスレッドに保存しました"
+  "chat.notice.savedToThread": "このスレッドに保存しました",
+  "settings.page.superagent": "Automation & models"
 }
