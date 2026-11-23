@@ -32,7 +32,7 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 6: Phase 4 `packages/workflow` | DONE as library, verify green. Uses own engine, NOT LangGraph (deviation, see its README). UI editor not built (6b) |
 | Part 7: Phase 5 gap note + Phase 6 `packages/compute` | DONE, verify green. No `packages/agents` created: gap note shows base already covers the features; CrewAI/AutoGen/MetaGPT/OpenHands/Aider deliberately not added (see docs/feature-gap.md) |
 | Part 8: Phase 7 packaging | PARTLY: `scripts/license-audit.mjs` (+`license-exceptions.json`) runs in verify.yml, green. `package.yml` matrix (win/mac/linux, manual) added; check its latest run with `gh run list -w package`. `scripts/build-licenses-page.mjs` writes `public/licenses.html` (not linked from UI yet) |
-| BLOCKER | GitHub Actions stopped: "recent account payments have failed or your spending limit needs to be increased" (private repo minutes used up, mostly by the package matrix). No CI verification is possible until the user fixes Settings > Billing, or makes the repo public (free minutes). Last verified-green commit: part8-9 era verify. Unverified since: part8-10 (artifact glob only). |
+| BLOCKER (still on after repo went PUBLIC) | GitHub Actions stopped: "recent account payments have failed or your spending limit needs to be increased" (private repo minutes used up, mostly by the package matrix). No CI verification is possible until the user fixes Settings > Billing, or makes the repo public (free minutes). Last verified-green commit: part8-9 era verify. Unverified since: part8-10 (artifact glob only). |
 | Part 9: wiring (4b, 5b, 6b, compute UI), user decision on sharp LGPL, rename/brand cleanup | NEXT |
 
 ## Log
@@ -115,3 +115,8 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 - Root cause of Linux failure: install dir changed from `/opt/OpenMausBot` to `/opt/SuperAgent` (productName "Super Agent" has a space; `package:linux*` scripts pass `-c.productName=SuperAgent`). All scripts, AppArmor profile and docs were updated.
 - Do NOT re-run `package.yml` often: it burns macOS/Windows minutes. Run it once per release.
 - Unsigned builds. Signing needs user certificates.
+
+### Repo is public (license Apache-2.0)
+- Made public by the user's request. License stays Apache-2.0: the base (OpenMausBot) is Apache-2.0 and a derivative must keep it (LICENSE + NOTICE are in the repo). History was scanned for secrets: none (only redaction regexes).
+- Actions still fail with 0 steps: "recent account payments have failed or your spending limit needs to be increased". Account-level; the user must fix GitHub Settings > Billing & plans (payment method). After that: run `gh workflow run verify.yml`, then `package.yml` once.
+- Until CI works, do NOT start Part 9 wiring (no way to typecheck in the 0.5 GB sandbox). Unverified commits since last green verify: part8-10, handoff commits only (workflow glob + docs).
