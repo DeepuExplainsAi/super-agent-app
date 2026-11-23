@@ -24,7 +24,8 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 2d: remove cloud/telemetry/Composio | PARTLY DONE, verify green. Done: PostHog (analytics.ts + launch-analytics.mjs are no-op stubs), updater disabled (UPDATES_DISABLED), Composio broker default URL and control-plane default URL emptied, deleted cloudflare/ relay/ connector/ deploy/ Dockerfile compose.yaml + their workflows. LEFT (env-gated, off unless OMB_CLOUD_*/OMB_BOAT_* set): server/boat*.ts, cloud-home*.ts, phone-relay.ts, hosted-*.ts, electron/cloud-account.mjs CLOUD_ORIGIN, src/lib/app-links.ts. Do these in cleanup after 2e. |
 | Part 2e: rename + remove mascot | MOSTLY DONE, verify green. Display name = "Super Agent" (locales, index.html, brand.ts, electron-builder.yml appId app.superagent.desktop, artifactName SuperAgent-*), new star icon (build/, public/), mascot images in src/assets/mausbot-steel replaced by star. LEFT: mascot React components still exist (CursorAvatar, CarvedAvatar, MausBotWelcome...), identifiers/env/protocol `openmausbot://`, `~/.openmausbot`, `OMB_*` intentionally kept (internal; renaming is risky); docs/ and apps/docs still say OpenMausBot; src/assets/bubblav + whop logos (third-party brands) unreviewed. |
 | Part 2f: final build + boot smoke | DONE: verify has `build` and `boot` jobs, both green (server boots, /api/edition = oss). NOT DONE: live API-key chat (needs user's key; see below) |
-| Part 3: theme (`packages/theme`) | NEXT |
+| Part 3: theme (`packages/theme`) | DONE (partial vs spec), verify green. `packages/theme/tokens.css` = new `agent` skin (dark, monochrome, Inter font token, rounded radii), imported in src/styles.css, registered in SKIN_IDS (packages/phone-protocol/src/app-settings.ts), SKINS, electron/skin-overlay.cjs, en.json tagline; it is the default dark skin (THEME_SKINS.dark, PRIOR_INSTALL_SKIN). Contrast check passes. NOT DONE: spec step 5 "no hard-coded hex colors left" (many .tsx files still have hex); no Lucide icon swap; font tokens still Geist (Inter token only in agent skin). Low priority polish. |
+| Part 4: `packages/models` | NEXT |
 
 ## Log
 ### Part 1 (done)
@@ -65,6 +66,11 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 - `.github/workflows/verify.yml`: jobs `build` (typecheck+vite build) and `boot` (starts server, checks health + edition=oss).
 - Live chat test pending the user's key: run `OMB_OPENROUTER_API_KEY=<key> pnpm omb` on a real PC, open the UI, pick an OpenRouter free model. Not verifiable in sandbox/CI.
 - Phase 0 step 6 ("one bot chats") therefore stays OPEN until the user confirms.
+
+### Part 3 (done)
+- verify.yml now also runs `node scripts/generate-locale.mjs --check` and `node scripts/check-skin-contrast.mjs`.
+- Rename changed English strings, so locale hashes were re-recorded (translations already contained the new name). it.json `agentcard.notice` was corrupt upstream; removed (falls back to English).
+- Local verify without install: `node scripts/check-skin-contrast.mjs` and `node scripts/generate-locale.mjs --check` run fine in the sandbox.
 
 ## Notes for next agent
 - `third_party/` already holds vendored code (hermes-agent, opencode, puppeteer, ...): licenses listed in THIRD_PARTY.md.
