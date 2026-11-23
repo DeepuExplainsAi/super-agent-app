@@ -1,0 +1,27 @@
+# THIRD_PARTY
+
+| Name | URL | License | Commit | Changes |
+|---|---|---|---|---|
+| OpenMausBot (base app) | https://github.com/milind-soni/OpenMausBot | Apache-2.0 (LICENSE verified) | 9066604de2be664c7819403d9d8aed94b827f5eb | Copied whole. `enterprise/` excluded (proprietary). Renaming/cloud removal pending (Part 2). |
+
+## Vendored in `third_party/` (came with OpenMausBot; LICENSE files verified present unless noted)
+| Folder | License |
+|---|---|
+| cache-tax | MIT |
+| cua-driver | MIT |
+| hermes-agent | MIT |
+| minimock | MIT |
+| models-dev | MIT |
+| onepassword-sdk | MIT |
+| opencode | MIT |
+| orca | MIT |
+| playwright-injected | Apache-2.0 |
+| provider-icons | MIT (Lobe Icons) |
+| puppeteer | Apache-2.0 |
+| t3-code | MIT |
+| vexa | Apache-2.0 |
+| browser | contains axe-core notice (MPL-2.0): VERIFY |
+| cloudflared, hpke-js, scrcpy | NO LICENSE FILE: VERIFY before shipping |
+
+## Excluded on purpose
+- `enterprise/` (OpenMausBot Enterprise License, source-available, not permissive).
