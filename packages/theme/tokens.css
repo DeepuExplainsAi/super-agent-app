@@ -14,9 +14,9 @@
   --color-menu: #161618;    
   --color-menu-hover: #ededed0f;
   --color-menu-active: #ededed14;
-  --color-inset: #101012;
+  --color-inset: #0e0e10;
   --color-control: #1f1f22;
-  --color-hairline: #2e2e32;
+  --color-hairline: #34343a;
   --color-ink: #ededed;
   --color-ink-secondary: #edededa8;
   --color-ink-tertiary: #ededed96;
@@ -28,7 +28,7 @@
   --color-bubble-user-ink: #ededed;   
   --color-success: #38d591;
   --color-danger: #ff5667;
-  --color-danger-ink: #ffffff;
+  --color-danger-ink: #0b0b0c;
   --color-success-ink: #072114;
   --color-warning: #ff9800;
   --color-scrollbar: #38383c;
