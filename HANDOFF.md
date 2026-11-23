@@ -1,6 +1,6 @@
 # HANDOFF (read this first, update after every part)
 
-Repo: https://github.com/DeepuExplainsAi/super-agent-app (private)
+Repo: https://github.com/DeepuExplainsAi/super-agent-app (public)
 Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 
 ## Working protocol (from the user)
@@ -119,4 +119,5 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 ### Repo is public (license Apache-2.0)
 - Made public by the user's request. License stays Apache-2.0: the base (OpenMausBot) is Apache-2.0 and a derivative must keep it (LICENSE + NOTICE are in the repo). History was scanned for secrets: none (only redaction regexes).
 - Actions still fail with 0 steps: "recent account payments have failed or your spending limit needs to be increased". Account-level; the user must fix GitHub Settings > Billing & plans (payment method). After that: run `gh workflow run verify.yml`, then `package.yml` once.
-- Until CI works, do NOT start Part 9 wiring (no way to typecheck in the 0.5 GB sandbox). Unverified commits since last green verify: part8-10, handoff commits only (workflow glob + docs).
+- UPDATE 2026-11-23: CI WORKS AGAIN (repo public, free minutes). verify green on 75549da (run 45229823544). Part 9 is unblocked.
+- (obsolete) Until CI works, do NOT start Part 9 wiring (no way to typecheck in the 0.5 GB sandbox). Unverified commits since last green verify: part8-10, handoff commits only (workflow glob + docs).
