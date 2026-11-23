@@ -29,7 +29,8 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 4b: wire failover into server (use packages/models chain behind a flag), real-binary test by user | pending (do after Part 5/6 or when user asks) |
 | Part 5: `packages/automation` | DONE as library, verify green (vitest packages/automation). NOT wired into app yet; real Playwright MCP / browser download not run (sandbox too small) |
 | Part 5b: wire into app (add `playwrightMcpServer()` to default mcpServers, setup panel using `installBrowsers`, run npx via Electron bundled Node), add Stagehand (MIT, verified) / Crawlee (Apache-2.0, verified) | pending |
-| Part 6: Phase 4 extra AI features behind flags | NEXT |
+| Part 6: Phase 4 `packages/workflow` | DONE as library, verify green. Uses own engine, NOT LangGraph (deviation, see its README). UI editor not built (6b) |
+| Part 7: Phase 5 `packages/agents` (other AI features, behind flags) | NEXT |
 
 ## Log
 ### Part 1 (done)
@@ -92,3 +93,7 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 - `packages/automation`: `playwrightMcpServer(appData)` (pinned MCP entry), `browsersInstalled/installBrowsers` (first-run download to `<appData>/browsers`), `crawl()` static crawler. Tests in `packages/automation/test`.
 - Bug found by CI: crawler text included `<title>`; fixed (strip `<head>`).
 - Open: Part 5b wiring (above). `npx` needs Node: use Electron's bundled Node.
+
+### Part 6 (done)
+- `packages/workflow`: JSON graph, task/approval nodes, conditional edges, retries, file checkpoint; test proves 3 nodes + restart + approval. `webhookAction` for user-run n8n.
+- Open: visual editor, register real actions (bots, automation, connectors).

@@ -12,3 +12,5 @@
 - [ ] Part 10: Phase 8 - split apps (bot-app, automation-app, workflow-app)
 
 Rule: after each part -> commit, push, update HANDOFF.md, push. Continue without asking.
+
+- [x] Part 6: Phase 4 `packages/workflow` library (engine, approval, retries, restart-safe). UI editor + real actions pending (6b)
