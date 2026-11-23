@@ -253,7 +253,7 @@ jobs:
           console.log(`ok: ${Object.keys(SPAWNED_PROXIES).length} proxies resolve in ${server}`);
           EOF
             # the speech helper is a nested signed .app and stays universal
-            speech="$res/OpenMausBot Speech.app/Contents/MacOS/speech-helper"
+            speech="$res/Super Agent Speech.app/Contents/MacOS/speech-helper"
             lipo -archs "$speech" | grep -q "x86_64" || { echo "::error::$speech lacks x86_64"; exit 1; }
             lipo -archs "$speech" | grep -q "arm64" || { echo "::error::$speech lacks arm64"; exit 1; }
             # every other native payload carries only this app's own CPU slice

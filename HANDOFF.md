@@ -22,8 +22,8 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 2b: baseline build | DONE: CI `verify` workflow green (install, typecheck, build) |
 | Part 2c: remove enterprise refs | DONE, verify green (server/enterprise.ts is now a stub; enterprise CI/CLA/tests removed) |
 | Part 2d: remove cloud/telemetry/Composio | PARTLY DONE, verify green. Done: PostHog (analytics.ts + launch-analytics.mjs are no-op stubs), updater disabled (UPDATES_DISABLED), Composio broker default URL and control-plane default URL emptied, deleted cloudflare/ relay/ connector/ deploy/ Dockerfile compose.yaml + their workflows. LEFT (env-gated, off unless OMB_CLOUD_*/OMB_BOAT_* set): server/boat*.ts, cloud-home*.ts, phone-relay.ts, hosted-*.ts, electron/cloud-account.mjs CLOUD_ORIGIN, src/lib/app-links.ts. Do these in cleanup after 2e. |
-| Part 2e: rename + remove mascot | NEXT |
-| Part 2f: final build + one API-key chat check | pending |
+| Part 2e: rename + remove mascot | MOSTLY DONE, verify green. Display name = "Super Agent" (locales, index.html, brand.ts, electron-builder.yml appId app.superagent.desktop, artifactName SuperAgent-*), new star icon (build/, public/), mascot images in src/assets/mausbot-steel replaced by star. LEFT: mascot React components still exist (CursorAvatar, CarvedAvatar, MausBotWelcome...), identifiers/env/protocol `openmausbot://`, `~/.openmausbot`, `OMB_*` intentionally kept (internal; renaming is risky); docs/ and apps/docs still say OpenMausBot; src/assets/bubblav + whop logos (third-party brands) unreviewed. |
+| Part 2f: final build + boot smoke + API-key chat check | NEXT: add CI job that boots server (node --experimental-strip-types server/index.ts), curl /api/health; then document how user tests a chat with OMB_OPENROUTER_API_KEY. Then go to Part 3 (theme). |
 
 ## Log
 ### Part 1 (done)
@@ -54,6 +54,11 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 - Kept `companion/` (electron+server import it); phone-relay is off unless OMB_PHONE_RELAY set.
 - Upstream `ci.yml` is now workflow_dispatch only; many upstream tests reference deleted dirs (cloud-home.test.ts, docker-image.test.ts, phone-relay.test.ts etc.) and will fail if run: delete or fix them when enabling a test job (Part 9).
 - Lockfile was hand-edited (removed cloudflare/control-plane importer); `verify` with --frozen-lockfile passes.
+
+### Part 2e (done, mostly)
+- Bulk regex renamed standalone `OpenMausBot|MausBot|SupaMaus` -> `Super Agent` in src/server/electron/shared/companion/skills/packages/scripts/evals (+ locale values). Lookbehind avoids identifiers, paths, URLs.
+- Native helper app renamed `Super Agent Speech.app` in code, builder yml, clean.mjs, plist, release.yml.
+- Brand name is a placeholder ("Super Agent"): user can change in one pass (grep "Super Agent").
 
 ## Notes for next agent
 - `third_party/` already holds vendored code (hermes-agent, opencode, puppeteer, ...): licenses listed in THIRD_PARTY.md.
