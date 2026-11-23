@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const css = readFileSync(join(root, "src/styles.css"), "utf8");
+const css = readFileSync(join(root, "src/styles.css"), "utf8") + "\n" + readFileSync(join(root, "packages/theme/tokens.css"), "utf8");
 
 function declarations(body) {
   const tokens = {};

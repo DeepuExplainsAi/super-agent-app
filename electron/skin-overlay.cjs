@@ -15,6 +15,7 @@ const SKIN_CHROME = Object.freeze({
   pop: Object.freeze({ color: "#fdf5ea", symbolColor: "#3a322d" }),
   halloween: Object.freeze({ color: "#110d16", symbolColor: "#c2b3cc" }),
   diwali: Object.freeze({ color: "#100d1f", symbolColor: "#cdbfdc" }),
+  agent: Object.freeze({ color: "#050505", symbolColor: "#ededed" }),
   aurora: Object.freeze({ color: "#0b0c0b", symbolColor: "#b4bab4" }),
 });
 

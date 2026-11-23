@@ -44,7 +44,7 @@ describe("skins", () => {
     for (const id of SKIN_IDS) {
       const body = css.match(new RegExp(`\\[data-skin="${id}"\\]\\s*\\{([^}]*)\\}`))?.[1] ?? "";
       const token = (name: string) => body.match(new RegExp(`(?:^|\\s)${name}:\\s*([^;]+);`))?.[1]?.trim();
-      const expected = id === "midnight" || id === "daylight"
+      const expected = id === "midnight" || id === "daylight" || id === "agent"
         ? `${token("--color-ink")}0f`
         : "color-mix(in srgb, var(--color-raised) 70%, transparent)";
       expect(token("--color-menu-hover"), id).toBe(expected);
@@ -65,14 +65,14 @@ describe("skins", () => {
     expect(SKIN_IDS.slice(0, 8)).toEqual([
       "midnight", "atelier", "foundry", "lagoon", "graphite", "linen", "dusk", "daylight",
     ]);
-    expect(PRIOR_INSTALL_SKIN).toBe("midnight");
+    expect(PRIOR_INSTALL_SKIN).toBe("agent");
   });
 
   it("follows the computer between Daylight and Midnight by default", () => {
     expect(DEFAULT_SKIN_CHOICE).toBe("system");
-    expect(THEME_SKINS).toEqual({ light: "daylight", dark: "midnight" });
+    expect(THEME_SKINS).toEqual({ light: "daylight", dark: "agent" });
     expect(resolveSkin("system", false)).toBe("daylight");
-    expect(resolveSkin("system", true)).toBe("midnight");
+    expect(resolveSkin("system", true)).toBe("agent");
     expect(resolveSkin("meadow", true)).toBe("meadow");
   });
 

@@ -26,14 +26,15 @@ export const SKINS: readonly Skin[] = [
   { id: "halloween", name: "Halloween", tagline: "Plum after dark, lit in pumpkin orange. Bats optional." },
   { id: "diwali", name: "Diwali", tagline: "Indigo night, lit in marigold and diya gold. Fireworks optional." },
   { id: "aurora", name: "Aurora", tagline: "Near-black, crossed by a band of green light. Glass on top." },
+  { id: "agent", name: "Agent", tagline: "The Super Agent look. Dark, monochrome, rounded." },
 ];
 
 /** "system" follows the OS between the light and dark skins below; anything else pins one skin. */
 export type SkinChoice = SkinId | "system";
-export const THEME_SKINS = { light: "daylight", dark: "midnight" } as const satisfies Record<"light" | "dark", SkinId>;
+export const THEME_SKINS = { light: "daylight", dark: "agent" } as const satisfies Record<"light" | "dark", SkinId>;
 
 export const DEFAULT_SKIN_CHOICE: SkinChoice = "system";
-export const PRIOR_INSTALL_SKIN: SkinId = "midnight";
+export const PRIOR_INSTALL_SKIN: SkinId = "agent";
 
 const KEY = "omb-skin";
 const DARK_QUERY = "(prefers-color-scheme: dark)";

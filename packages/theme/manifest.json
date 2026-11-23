@@ -1,0 +1,8 @@
+{
+  "name": "@super-agent/theme",
+  "version": "0.1.0",
+  "tools": [],
+  "uiPanels": [],
+  "needs": [],
+  "files": ["tokens.css"]
+}
