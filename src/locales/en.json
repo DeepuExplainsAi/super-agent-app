@@ -9592,6 +9592,7 @@
   "skins.tagline.halloween": "Plum after dark, lit in pumpkin orange. Bats optional.",
   "skins.tagline.diwali": "Indigo night, lit in marigold and diya gold. Fireworks optional.",
   "skins.tagline.aurora": "Near-black, crossed by a band of green light. Glass on top.",
+  "skins.tagline.agent": "The Super Agent look. Dark, monochrome, rounded.",
   "automations.calendar.cronMove": "Open this automation to change its repeating schedule.",
   "automations.calendar.moveSeries": "Move every time it repeats?",
   "automations.address.copyAddressFailed": "Couldn't copy the address",

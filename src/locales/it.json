@@ -33,7 +33,6 @@
   "hostedMcp.testFailed": "Accesso fatto, ma gli strumenti di {service} non si sono caricati: {reason} Collegati di nuovo per riprovare.",
   "hostedMcp.loadingTools": "Accesso fatto. Caricamento degli strumenti di {service}…",
   "agentcard.description": "Acquista e paga dal tuo account Agentcard.",
-  "agentcard.notice": "Accedi con il tuo account Agentcard. Non è necessaria alcuna chiave 1. Agentcard conserva le tue carte e gestisce le approvazioni degli acquisti; 0 non memorizza alcun dato delle carte. Un bot che può utilizzare Agentcard può richiamare tutti i suoi strumenti, inclusi l'acquisto e la visualizzazione dei dati della carta. Pertanto, scegli quali bot possono accedervi nella sezione Accesso dei bot.",
   "hostedMcp.keyLabel": "{service} API chiave",
   "hostedMcp.keyPlaceholder": "Incolla il tuo {service} chiave",
   "hostedMcp.getKey": "Prendi {service} chiave",
