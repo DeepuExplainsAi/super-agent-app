@@ -12,7 +12,7 @@ jobs:
         include:
           - { os: windows-latest, script: "package:win", files: "release/*.exe" }
           - { os: macos-15, script: "package:mac", files: "release/*.dmg" }
-          - { os: ubuntu-24.04, script: "package:linux", files: "release/*.AppImage release/*.deb release/*.rpm" }
+          - { os: ubuntu-24.04, script: "package:linux:offline", files: "release/*.AppImage release/*.deb release/*.rpm" }
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
@@ -22,7 +22,7 @@ jobs:
         with: { node-version: 24, cache: pnpm }
       - name: rpm tooling (Linux)
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y rpm
+        run: sudo apt-get update && sudo apt-get install -y rpm cpio squashfs-tools desktop-file-utils
       - run: pnpm install --frozen-lockfile
       - name: License audit (must pass)
         shell: bash
