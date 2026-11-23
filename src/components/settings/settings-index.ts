@@ -51,7 +51,7 @@ const adminPage = (ctx: SettingsContext) => !ctx.client && !(ctx.team && !ctx.ad
 const advancedOnly = (when: (ctx: SettingsContext) => boolean) => (ctx: SettingsContext) => ctx.advanced && when(ctx);
 /** Simple mode's ten entries: the place (Overview, Phone & devices, AI, Vault, Spending, Import & export), Your account
  * (Plan & billing) and This app (Appearance). Advanced adds You and your bots, Desktops & browser, Data and General. */
-export const ADVANCED_PAGES: readonly SettingsPageId[] = ["bots", "desktops", "data", "general"];
+export const ADVANCED_PAGES: readonly SettingsPageId[] = ["superagent", "bots", "desktops", "data", "general"];
 
 export const SETTINGS_PAGES: readonly SettingsPage[] = [
   { id: "overview", owner: "place", labelKey: "settings.page.overview", synonyms: ["overview", "place", "status", "version", "domain", "address", "sidebar"], when: () => true },
@@ -59,7 +59,7 @@ export const SETTINGS_PAGES: readonly SettingsPage[] = [
     synonyms: ["phone", "pair", "pairing", "qr", "code", "iphone", "android", "mobile", "tablet", "device", "devices", "wifi", "wi-fi", "anywhere", "relay", "remote", "companion", "tailscale", "connect your phone", "get the phone app", "pair a device", "this server", "remote access"] },
   { id: "ai", owner: "place", labelKey: "settings.group.ai", icon: Sparkles, when: adminPage,
     synonyms: ["ai", "models", "model providers", "providers", "engines", "api keys", "keys", "key", "claude", "codex", "openai", "anthropic", "ollama", "lm studio", "local model"] },
-  { id: "superagent", owner: "place", labelKey: "settings.page.superagent", icon: Workflow, when: adminPage,
+  { id: "superagent", owner: "place", labelKey: "settings.page.superagent", icon: Workflow, when: advancedOnly(adminPage),
     synonyms: ["super agent", "automation", "playwright", "crawl", "workflow", "workflows", "jobs", "failover", "kiro", "opencode", "openrouter", "localai"] },
   { id: "bots", owner: "place", labelKey: "settings.page.bots", icon: Bot, when: advancedOnly(notClient),
     synonyms: ["all bots", "bots", "about you", "about me", "profile", "new bots", "defaults", "effort", "limits", "rules"] },

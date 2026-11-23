@@ -55,7 +55,7 @@ describe("the Settings window", () => {
   it("opens with the place, Your account and This app, each headed by an identity row", () => {
     fixture.advanced = true;
     const html = render();
-    expect(navPages(html)).toEqual(["overview", "phone", "ai", "bots", "desktops", "vault", "usage", "transfer", "data", "account", "app", "general", "appearance"]);
+    expect(navPages(html)).toEqual(["overview", "phone", "ai", "superagent", "bots", "desktops", "vault", "usage", "transfer", "data", "account", "app", "general", "appearance"]);
     expect(html).toContain("This computer");
     expect(html).toContain("Your account");
     expect(html).toContain("This app");
