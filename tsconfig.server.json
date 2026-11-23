@@ -23,7 +23,8 @@
   },
   "include": [
     "server",
-    "companion"
+    "companion",
+    "packages/models/src"
   ],
   "exclude": [
     "server/drivers/pi-mcp-extension.ts"
