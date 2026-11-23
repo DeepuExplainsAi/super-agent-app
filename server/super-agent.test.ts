@@ -8,7 +8,7 @@ import { callRoute } from "./routes/call-route.ts";
 import { createSuperAgent } from "./super-agent.ts";
 
 const owner: RequestAuth = { kind: "loopback", scopes: ["admin", "client"] };
-const phone: RequestAuth = { kind: "loopback", scopes: ["client"] };
+const phone: RequestAuth = { kind: "loopback", scopes: ["client"], trust: "service" };
 
 const fake = (id: string, signedIn: boolean, text: string): ModelProvider => ({
   id, status: async () => ({ signedIn }), listModels: async () => [],
