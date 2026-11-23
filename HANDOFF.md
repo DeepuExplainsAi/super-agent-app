@@ -31,7 +31,8 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 5b: wire into app (add `playwrightMcpServer()` to default mcpServers, setup panel using `installBrowsers`, run npx via Electron bundled Node), add Stagehand (MIT, verified) / Crawlee (Apache-2.0, verified) | pending |
 | Part 6: Phase 4 `packages/workflow` | DONE as library, verify green. Uses own engine, NOT LangGraph (deviation, see its README). UI editor not built (6b) |
 | Part 7: Phase 5 gap note + Phase 6 `packages/compute` | DONE, verify green. No `packages/agents` created: gap note shows base already covers the features; CrewAI/AutoGen/MetaGPT/OpenHands/Aider deliberately not added (see docs/feature-gap.md) |
-| Part 8: Phase 7 release packaging + license-audit CI + in-app licenses screen | NEXT |
+| Part 8: Phase 7 packaging | PARTLY: `scripts/license-audit.mjs` (+`license-exceptions.json`) runs in verify.yml, green. `package.yml` matrix (win/mac/linux, manual) added; check its latest run with `gh run list -w package`. `scripts/build-licenses-page.mjs` writes `public/licenses.html` (not linked from UI yet) |
+| Part 9: wiring (4b, 5b, 6b, compute UI), user decision on sharp LGPL, rename/brand cleanup | NEXT |
 
 ## Log
 ### Part 1 (done)
@@ -101,3 +102,9 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 
 ### Part 7 (done)
 - `docs/feature-gap.md`; `packages/compute` (queue, cancel, progress, concurrency + free-RAM gate; no hard CPU/RAM caps, not persistent, not wired).
+
+### Part 8 (partly done)
+- License audit found real items, all recorded in `scripts/license-exceptions.json` with reasons: OFL fonts, MPL-2.0 native deps (unmodified), EPL elkjs, khroma (MIT per repo).
+- **USER DECISION:** `sharp` ships LGPL-3.0 libvips (dynamic, unmodified). Spec allows only permissive licenses. Accept or replace sharp.
+- Package workflow fixes: Windows needs `shell` for pnpm (done), Linux needs `rpm` apt package (done). macOS/Windows packaging results: see latest `package` run.
+- Packages are unsigned; signing/notarization needs the user's certificates.
