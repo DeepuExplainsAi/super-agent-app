@@ -9,14 +9,14 @@ import { fileURLToPath } from "node:url";
 // where the event runs it), and the subsets in VITEST_SUBSETS.
 export const SELECTABLE_JOBS = [
   "build", "vitest", "behavior-evals", "packaged-server", "windows-cua", "electron-smokes", "cloudflared-linux-arm64",
-  "foss", "control-plane", "ui-smoke", "browser-identity", "package-linux", "browser-driver", "relay",
+  "control-plane", "ui-smoke", "browser-identity", "package-linux", "browser-driver", "relay",
 ];
 
 // The server imports Electron and renderer modules, and the macOS smokes run
 // the packaged server inside Electron, so a server change and a desktop change
 // can affect the same checks.
 const SERVER_CHECKS = [
-  "build", "linux-tests", "host-tests", "behavior-evals", "packaged-server", "foss", "electron-smokes",
+  "build", "linux-tests", "host-tests", "behavior-evals", "packaged-server", "electron-smokes",
   "ui-smoke", "browser-identity", "browser-driver", "package-linux",
 ];
 const EVERY_CHECK = [...SERVER_CHECKS, "windows-cua", "cloudflared-linux-arm64", "control-plane", "relay"];
@@ -230,7 +230,7 @@ const AREAS = [
   [/^src\/locales\/(?:(?!en\.json$)[^/]+\.json|[^/]+\.test\.ts)$/, "locales"],
   [/^(?:src|public)\/|^[^/]+-preview\.html$/, "web"],
   [/^companion\/src\/e2e\/vectors\//, "e2e-vectors"],
-  [/^(?:server|shared|packages\/phone-protocol|enterprise|companion|evals|skills|deploy|cloudflare\/composio-broker)\/|^(?:Dockerfile|\.dockerignore|compose\.yaml)$/, "server"],
+  [/^(?:server|shared|packages\/phone-protocol|companion|evals|skills|deploy|cloudflare\/composio-broker)\/|^(?:Dockerfile|\.dockerignore|compose\.yaml)$/, "server"],
   [/^electron\/(?:cua|cua-failure|cua-connection|capabilities|screen-status|shared-cua-connection|shared-computer-access|lent-screen-tools|lent-screen-failures|paced-typing)\.[cm]js$/, "windows-computer-control"],
   [/^(?:electron|build)\/|^(?:electron-builder\.yml|index\.html|rail\.html)$/, "desktop"],
   [/^cloudflare\/control-plane\//, "control-plane"],
@@ -254,7 +254,7 @@ export const FULL_SCOPE = { areas: ["everything"], checks: [...EVERY_CHECK].sort
 export const MAIN_SCOPE = {
   areas: ["main"],
   checks: [
-    "behavior-evals", "browser-identity", "build", "control-plane", "electron-smokes", "foss", "host-tests", "linux-tests", "packaged-server",
+    "behavior-evals", "browser-identity", "build", "control-plane", "electron-smokes", "host-tests", "linux-tests", "packaged-server",
     "ui-smoke",
   ],
 };
