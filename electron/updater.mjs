@@ -192,7 +192,7 @@ export function attachUpdaterWindow(mainWindow) {
 const UPDATES_DISABLED = true;
 
 export function startUpdater(signals = null) {
-  // Auto-update is disabled in this build: it would fetch upstream OpenMausBot releases. Revisit when we publish our own.
+  // Auto-update is disabled in this build: it would fetch upstream Super Agent releases. Revisit when we publish our own.
   if (UPDATES_DISABLED || !app.isPackaged) {
     updaterCoordinator = null;
     setState({ status: "idle" });

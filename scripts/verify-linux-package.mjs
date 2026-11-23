@@ -75,7 +75,7 @@ function requireUpdaterTarget(resources, label) {
   const updateFile = path.join(resources, "app-update.yml");
   requireFile(updateFile);
   const update = readFileSync(updateFile, "utf8");
-  if (!/^owner: milind-soni$/m.test(update) || !/^repo: OpenMausBot$/m.test(update)) {
+  if (!/^owner: milind-soni$/m.test(update) || !/^repo: Super Agent$/m.test(update)) {
     fail(`${label} app-update.yml does not point at milind-soni/OpenMausBot`);
   }
 }
@@ -437,7 +437,7 @@ for (const expected of [
 
 // The DEB and RPM install the same tree under /opt; check what each extracted.
 function verifySystemPackage(extracted, label, packageType) {
-  const appRoot = path.join(extracted, "opt", "OpenMausBot");
+  const appRoot = path.join(extracted, "opt", "Super Agent");
   requireDirectoryMode(appRoot, 0o755);
   const packageResources = path.join(appRoot, "resources");
   // Routes the in-app updater to the package-manager hand-off.
@@ -473,7 +473,7 @@ function verifySystemPackage(extracted, label, packageType) {
   requireFile(scalableIcon);
   const desktop = readFileSync(desktopFile, "utf8");
   for (const expected of [
-    "Name=OpenMausBot",
+    "Name=Super Agent",
     "Exec=/opt/OpenMausBot/openmausbot %U",
     "Icon=openmausbot",
     "StartupWMClass=com.openmausbot.app",

@@ -1,4 +1,4 @@
-// Teammates on other servers: a bot that another OpenMausBot server runs, reached through that server's Bot API
+// Teammates on other servers: a bot that another Super Agent server runs, reached through that server's Bot API
 // (docs/bot-api.md) with the key its owner made there. The key is kept in this file alone (mode 600): it is never listed,
 // logged or sent anywhere but the Bot API address it was saved with.
 import { randomUUID } from "node:crypto";
@@ -191,7 +191,7 @@ export class RemoteTeammates {
   }
 
   private assertWritable(): void {
-    if (this.unreadable) throw new RemoteTeammateError("The saved teammates on other servers could not be read. Repair remote-teammates.json and restart OpenMausBot before changing them.", 503);
+    if (this.unreadable) throw new RemoteTeammateError("The saved teammates on other servers could not be read. Repair remote-teammates.json and restart Super Agent before changing them.", 503);
   }
 
   /** Writes `teammates` and only then keeps them, so a failed write leaves the list as the file has it. */

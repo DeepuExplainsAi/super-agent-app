@@ -1,6 +1,6 @@
 const TOKEN = /^[0-9a-f]{64}$/;
 
-/** OpenMausBot's connected-apps service (cloudflare/composio-broker): the packaged desktop app and a Cloud home use it. */
+/** Super Agent's connected-apps service (cloudflare/composio-broker): the packaged desktop app and a Cloud home use it. */
 export const DEFAULT_MANAGED_COMPOSIO_BROKER_URL = "";
 
 /** OMB_COMPOSIO_BROKER=off: nothing reaches the managed service, whatever else is set. */
