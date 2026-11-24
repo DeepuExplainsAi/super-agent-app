@@ -1,0 +1,21 @@
+name: update-lockfile
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: pnpm install --lockfile-only --ignore-scripts
+      - name: Commit lockfile
+        run: |
+          git config user.name DeepuExplainsAi
+          git config user.email deepu@users.noreply.github.com
+          git add pnpm-lock.yaml
+          git diff --cached --quiet || { git commit -m "part5b: update lockfile (stagehand, crawlee)"; git push; }
