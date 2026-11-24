@@ -20,6 +20,7 @@ await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const url = `http://127.0.0.1:${server.address().port}/`;
 const run = spawnSync(process.execPath, ["--input-type=module", "-e", `import { crawlWithCrawlee } from ${JSON.stringify(join(out, "crawlee.mjs"))}; console.log(JSON.stringify(await crawlWithCrawlee(${JSON.stringify(url)}, { maxPages: 1 })));`], { encoding: "utf8", cwd: out });
 server.close();
-const pages = JSON.parse(run.stdout.trim().split("\n").at(-1) ?? "[]");
+let pages = [];
+try { pages = JSON.parse(run.stdout.trim().split("\n").at(-1) ?? "[]"); } catch {}
 if (pages[0]?.title !== "Bundled") { console.error(run.stdout, run.stderr); process.exit(1); }
 console.log("crawlee bundle ok");
