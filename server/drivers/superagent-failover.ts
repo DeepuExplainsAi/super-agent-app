@@ -23,7 +23,7 @@ export interface FailoverDriverDeps { providers?: (config: FailoverConfig, envir
 export function createFailoverDriver(deps: FailoverDriverDeps = {}): ProviderDriver<FailoverConfig> {
   const providersFor = deps.providers ?? ((config, environment) => [
     createKiro(), createOpenCode(),
-    createOpenRouter({ apiKey: environment.OPENROUTER_API_KEY ?? process.env.OPENROUTER_API_KEY }),
+    createOpenRouter({ apiKey: () => environment.OPENROUTER_API_KEY ?? process.env.OPENROUTER_API_KEY }),
     createLocalAi(config.localaiUrl ? { baseUrl: config.localaiUrl } : {}),
   ]);
   return {
