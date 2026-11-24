@@ -1,8 +1,8 @@
-import { mkdirSync, mkdtempSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { browsersInstalled, crawl, extractPage, playwrightMcpServer } from "../src/index.ts";
+import { browsersInstalled, bundledRuntime, crawl, extractPage, playwrightMcpServer } from "../src/index.ts";
 
 const html = (title: string, body: string) => new Response(`<html><head><title>${title}</title></head><body>${body}</body></html>`, { headers: { "content-type": "text/html" } });
 
@@ -12,6 +12,26 @@ describe("playwright mcp entry", () => {
     expect(entry.command).toBe("npx");
     expect(entry.args).toEqual(["-y", "@playwright/mcp@0.0.86", "--isolated", "--headless"]);
     expect(entry.env.PLAYWRIGHT_BROWSERS_PATH).toBe(join("/data", "browsers"));
+  });
+});
+
+describe("bundled playwright mcp", () => {
+  const stage = (files: string[]) => {
+    const resources = mkdtempSync(join(tmpdir(), "sa-res-"));
+    for (const file of files) { mkdirSync(join(resources, "playwright-mcp", "node_modules", file, ".."), { recursive: true }); writeFileSync(join(resources, "playwright-mcp", "node_modules", file), ""); }
+    return { OMB_RESOURCES_PATH: resources };
+  };
+  it("is absent without staged files, so dev checkouts keep using npx", () => {
+    expect(bundledRuntime({})).toBeUndefined();
+    expect(bundledRuntime(stage(["@playwright/mcp/cli.js"]))).toBeUndefined();
+    expect(playwrightMcpServer("/data", { runtimeEnv: {} }).command).toBe("npx");
+  });
+  it("runs the staged copy on the app's own Node when both files exist", () => {
+    const env = stage(["@playwright/mcp/cli.js", "playwright-core/cli.js"]);
+    const entry = playwrightMcpServer("/data", { headless: true, runtimeEnv: env });
+    expect(entry.command).toBe(process.execPath);
+    expect(entry.args).toEqual([join(env.OMB_RESOURCES_PATH!, "playwright-mcp", "node_modules", "@playwright", "mcp", "cli.js"), "--isolated", "--headless"]);
+    expect(entry.env).toMatchObject({ ELECTRON_RUN_AS_NODE: "1", PLAYWRIGHT_BROWSERS_PATH: join("/data", "browsers") });
   });
 });
 

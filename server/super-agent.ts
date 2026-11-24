@@ -1,7 +1,7 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { delimiter, join } from "node:path";
 import { existsSync } from "node:fs";
-import { browsersInstalled, crawlWithCrawlee as crawl, installBrowsers, playwrightMcpServer } from "../packages/automation/src/index.ts";
+import { browsersInstalled, bundledRuntime, crawlWithCrawlee as crawl, installBrowsers, playwrightMcpServer } from "../packages/automation/src/index.ts";
 import { createJobQueue, type JobQueue } from "../packages/compute/src/index.ts";
 import {
   createFailoverChain, createKiro, createLocalAi, createOpenCode, createOpenRouter, DEFAULT_ORDER, ProviderError,
@@ -25,9 +25,9 @@ export interface SuperAgentDeps {
 
 const ID = /^[\w-]{1,64}$/;
 
-/** The Playwright MCP entry starts through npx, which Electron does not bundle: it needs a Node install on PATH. */
+/** The Playwright MCP runs from the bundled copy (packaged app); a dev checkout falls back to npx and needs Node on PATH. */
 const npxOnPath = (env: NodeJS.ProcessEnv) =>
-  (env.PATH ?? "").split(delimiter).some((dir) => dir && ["npx", "npx.cmd"].some((name) => existsSync(join(dir, name))));
+  Boolean(bundledRuntime(env)) || (env.PATH ?? "").split(delimiter).some((dir) => dir && ["npx", "npx.cmd"].some((name) => existsSync(join(dir, name))));
 const SETTINGS_FILE = "super-agent.json";
 
 interface Settings { order: string[]; localaiUrl?: string }
@@ -91,14 +91,14 @@ export function createSuperAgent(deps: SuperAgentDeps) {
     }
     if (path === "/api/sa/automation/install-browsers" && method === "POST") {
       const lines: string[] = []; progress.set("install", lines);
-      const id = jobs.add("Install browsers", async (ctx) => { await installBrowsers(deps.dataDir, ({ line }) => { lines.push(line); ctx.progress(0.5, line); }); });
+      const id = jobs.add("Install browsers", async (ctx) => { await installBrowsers(deps.dataDir, ({ line }) => { lines.push(line); ctx.progress(0.5, line); }, "chromium", deps.env ?? process.env); });
       return json(res, 202, { job: id });
     }
     if (path === "/api/sa/automation/playwright" && method === "PUT") {
       const { enabled } = await body() as { enabled?: unknown };
       const next = { ...deps.mcpServers() };
       if (enabled === true && !npxOnPath(deps.env ?? process.env)) return json(res, 409, { error: "Playwright tools start through npx. Install Node.js (nodejs.org), then try again." });
-      if (enabled === true) next.playwright = { ...playwrightMcpServer(deps.dataDir, { headless: false }), enabled: true };
+      if (enabled === true) next.playwright = { ...playwrightMcpServer(deps.dataDir, { headless: false, runtimeEnv: deps.env ?? process.env }), enabled: true };
       else delete next.playwright;
       deps.persistMcpServers(next);
       return json(res, 200, { playwrightEnabled: enabled === true });

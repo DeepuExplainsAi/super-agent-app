@@ -26,7 +26,7 @@
 ## Dependencies by reference (not copied)
 | Package | License | Where |
 |---|---|---|
-| @playwright/mcp 0.0.86 | Apache-2.0 | packages/automation (run via npx, pinned) |
+| @playwright/mcp 0.0.86 | Apache-2.0 | packages/automation; staged by scripts/prepare-playwright-mcp.mjs into resources/playwright-mcp and run on the app's own Node (dev checkouts: npx, pinned) |
 | playwright 1.65.1 | Apache-2.0 | browser download on first run |
 | @crawlee/cheerio 3.18.2 | Apache-2.0 | packages/automation/src/crawlee.ts; bundled into the server (needs header-generator data_files beside the bundle). Dependency tree audited: no GPL |
 | @browserbasehq/stagehand 4.4.0 | MIT | packages/automation/src/stagehand.ts; lazy import, user's own model key, local browser only (no Browserbase cloud) |

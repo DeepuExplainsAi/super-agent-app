@@ -1,4 +1,4 @@
-import { mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -40,6 +40,18 @@ describe("super agent routes", () => {
     expect((await t.call("PUT", "/api/sa/automation/playwright", { enabled: true })).status).toBe(409);
     expect(t.servers().playwright).toBeUndefined();
     expect((await t.call("GET", "/api/sa/automation")).body.npxAvailable).toBe(false);
+  });
+
+  it("enables Playwright without npx when the app ships its own copy", async () => {
+    const resources = mkdtempSync(join(tmpdir(), "sa-res-"));
+    for (const file of ["@playwright/mcp/cli.js", "playwright-core/cli.js"]) {
+      mkdirSync(join(resources, "playwright-mcp", "node_modules", file, ".."), { recursive: true });
+      writeFileSync(join(resources, "playwright-mcp", "node_modules", file), "");
+    }
+    let servers: Record<string, unknown> = {};
+    const sa = createSuperAgent({ dataDir: mkdtempSync(join(tmpdir(), "sa-")), env: { PATH: "", OMB_RESOURCES_PATH: resources }, mcpServers: () => servers, persistMcpServers: (next) => { servers = next; }, openrouterKey: () => undefined, providers: [] });
+    expect((await callRoute(sa.routes, { method: "PUT", path: "/api/sa/automation/playwright", body: { enabled: true }, auth: owner })).status).toBe(200);
+    expect(servers.playwright).toMatchObject({ command: process.execPath, enabled: true });
   });
 
   it("adds and removes the Playwright MCP server", async () => {

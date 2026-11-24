@@ -125,6 +125,8 @@ mac:
     # node_modules entry of any tree it copies (app-builder-lib util/filter).
     - from: dist-native/duckdb/darwin-${arch}/node_modules
       to: duckdb/node_modules
+    - from: dist-native/playwright-mcp
+      to: playwright-mcp
   extendInfo:
     NSMicrophoneUsageDescription: Super Agent uses the microphone for voice dictation into the composer.
     NSSpeechRecognitionUsageDescription: Super Agent transcribes your voice on-device to type messages for you.
@@ -170,6 +172,8 @@ win:
       to: browser-engine
     - from: dist-native/duckdb/win32-x64/node_modules
       to: duckdb/node_modules
+    - from: dist-native/playwright-mcp
+      to: playwright-mcp
     # CUA driver and SDK for Windows — must live outside ASAR for native modules
     - from: dist-native/cua-win32-x64/cua-driver.exe
       to: cua-driver.exe
@@ -225,6 +229,8 @@ linux:
       to: browser-engine
     - from: dist-native/duckdb/linux-x64/node_modules
       to: duckdb/node_modules
+    - from: dist-native/playwright-mcp
+      to: playwright-mcp
     - from: build/linux-openmausbot-browser.apparmor
       to: openmausbot-browser.apparmor
   desktop:
