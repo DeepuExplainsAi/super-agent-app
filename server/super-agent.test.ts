@@ -1,4 +1,4 @@
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -15,10 +15,12 @@ const fake = (id: string, signedIn: boolean, text: string): ModelProvider => ({
   async *chat() { yield { type: "text", text }; yield { type: "done", provider: id }; },
 });
 
-function setup(providers: ModelProvider[] = []) {
+function setup(providers: ModelProvider[] = [], withNpx = true) {
   let servers: Record<string, unknown> = {};
   const dataDir = mkdtempSync(join(tmpdir(), "sa-"));
-  const sa = createSuperAgent({ dataDir, mcpServers: () => servers, persistMcpServers: (next) => { servers = next; }, openrouterKey: () => undefined, providers });
+  const bin = mkdtempSync(join(tmpdir(), "sa-bin-"));
+  if (withNpx) writeFileSync(join(bin, "npx"), "");
+  const sa = createSuperAgent({ dataDir, env: { PATH: bin }, mcpServers: () => servers, persistMcpServers: (next) => { servers = next; }, openrouterKey: () => undefined, providers });
   const call = (method: string, path: string, body?: unknown, auth: RequestAuth = owner) => callRoute(sa.routes, { method, path, body, auth });
   return { call, servers: () => servers };
 }
@@ -31,6 +33,13 @@ describe("super agent routes", () => {
   it("lists package manifests", async () => {
     const reply = await setup().call("GET", "/api/sa/packages");
     expect((reply.body.packages as { name: string }[]).map((p) => p.name)).toContain("@super-agent/automation");
+  });
+
+  it("refuses to enable Playwright without npx", async () => {
+    const t = setup([], false);
+    expect((await t.call("PUT", "/api/sa/automation/playwright", { enabled: true })).status).toBe(409);
+    expect(t.servers().playwright).toBeUndefined();
+    expect((await t.call("GET", "/api/sa/automation")).body.npxAvailable).toBe(false);
   });
 
   it("adds and removes the Playwright MCP server", async () => {

@@ -7,7 +7,7 @@ import { SettingRow, SettingsGroup, SettingsRows, Switch, SETTINGS_INPUT } from 
 // Labels on this page are English only for now; the nav label has a locale key.
 
 interface Models { order: string[]; providers: { id: string; signedIn: boolean; note?: string }[]; cooling: Record<string, number> }
-interface Automation { browsersInstalled: boolean; playwrightEnabled: boolean; install: string[] }
+interface Automation { browsersInstalled: boolean; playwrightEnabled: boolean; npxAvailable: boolean; install: string[] }
 interface Job { id: string; name: string; status: string; progress: number; message?: string; error?: string }
 interface Run { runId: string; status: string; current: string | null; error?: string; state: Record<string, unknown> }
 
@@ -79,8 +79,8 @@ function AutomationGroup() {
         <SettingRow title="Browser download" subtitle={state.browsersInstalled ? "Installed" : state.install.at(-1) ?? "Not downloaded yet"}>
           <button type="button" className={QUIET_BUTTON} disabled={state.browsersInstalled} onClick={() => void send("POST", "/api/sa/automation/install-browsers").then(load)}>Download</button>
         </SettingRow>
-        <SettingRow title="Playwright tools for bots" subtitle="Adds the pinned Playwright MCP server to your MCP servers.">
-          <Switch checked={state.playwrightEnabled} aria-label="Playwright tools for bots" onClick={() => void send("PUT", "/api/sa/automation/playwright", { enabled: !state.playwrightEnabled }).then(load)} />
+        <SettingRow title="Playwright tools for bots" subtitle={state.npxAvailable || state.playwrightEnabled ? "Adds the pinned Playwright MCP server to your MCP servers." : "Needs Node.js (npx) installed on this computer."}>
+          <Switch checked={state.playwrightEnabled} disabled={!state.npxAvailable && !state.playwrightEnabled} aria-label="Playwright tools for bots" onClick={() => void send("PUT", "/api/sa/automation/playwright", { enabled: !state.playwrightEnabled }).then(load)} />
         </SettingRow>
         <div className="flex flex-col gap-2 px-4 py-3">
           <input className={SETTINGS_INPUT} value={url} placeholder="https://example.com (crawl up to 5 pages)" onChange={(e) => setUrl(e.target.value)} />
