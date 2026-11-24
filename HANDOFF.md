@@ -26,9 +26,9 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 | Part 2f: final build + boot smoke | DONE: verify has `build` and `boot` jobs, both green (server boots, /api/edition = oss). NOT DONE: live API-key chat (needs user's key; see below) |
 | Part 3: theme (`packages/theme`) | DONE (partial vs spec), verify green. `packages/theme/tokens.css` = new `agent` skin (dark, monochrome, Inter font token, rounded radii), imported in src/styles.css, registered in SKIN_IDS (packages/phone-protocol/src/app-settings.ts), SKINS, electron/skin-overlay.cjs, en.json tagline; it is the default dark skin (THEME_SKINS.dark, PRIOR_INSTALL_SKIN). Contrast check passes. NOT DONE: spec step 5 "no hard-coded hex colors left" (many .tsx files still have hex); no Lucide icon swap; font tokens still Geist (Inter token only in agent skin). Low priority polish. |
 | Part 4: `packages/models` | DONE as a library, verify green (typecheck + vitest packages/models). NOT wired into the app yet; NOT tested against real `opencode`/`kiro-cli` binaries (none in CI/sandbox). Upstream already has its own ACP drivers (server/drivers/acp/kiro.ts, opencode-go.ts, core.ts) that the app actually uses; our package is a separate small client + failover. Wiring = Part 4b below. |
-| Part 4b: wire failover into server (use packages/models chain behind a flag), real-binary test by user | pending (do after Part 5/6 or when user asks) |
+| Part 4b: failover as bot engine | DONE, verify green. `server/drivers/superagent-failover.ts` (driver kind `superagent-failover`, registered in BUILT_IN_DRIVERS, test in `server/drivers/superagent-failover.test.ts`). Add an instance with that driver in config to use it; order and OpenRouter key come from the instance config or env. NOT tested against real kiro/opencode binaries. |
 | Part 5: `packages/automation` | DONE as library, verify green (vitest packages/automation). NOT wired into app yet; real Playwright MCP / browser download not run (sandbox too small) |
-| Part 5b: wire into app (add `playwrightMcpServer()` to default mcpServers, setup panel using `installBrowsers`, run npx via Electron bundled Node), add Stagehand (MIT, verified) / Crawlee (Apache-2.0, verified) | pending |
+| Part 5b: automation wiring | PARTLY DONE. Playwright switch now refuses (409) when `npx` is not on PATH and the page says so (`npxAvailable`). NOT done: Electron-bundled Node for npx (Electron ships no npm), Stagehand and Crawlee. |
 | Part 6: Phase 4 `packages/workflow` | DONE as library, verify green. Uses own engine, NOT LangGraph (deviation, see its README). UI editor not built (6b) |
 | Part 7: Phase 5 gap note + Phase 6 `packages/compute` | DONE, verify green. No `packages/agents` created: gap note shows base already covers the features; CrewAI/AutoGen/MetaGPT/OpenHands/Aider deliberately not added (see docs/feature-gap.md) |
 | Part 8: Phase 7 packaging | PARTLY: `scripts/license-audit.mjs` (+`license-exceptions.json`) runs in verify.yml, green. `package.yml` matrix (win/mac/linux, manual) added; check its latest run with `gh run list -w package`. `scripts/build-licenses-page.mjs` writes `public/licenses.html` (not linked from UI yet) |
@@ -107,7 +107,7 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 
 ### Part 8 (partly done)
 - License audit found real items, all recorded in `scripts/license-exceptions.json` with reasons: OFL fonts, MPL-2.0 native deps (unmodified), EPL elkjs, khroma (MIT per repo).
-- **USER DECISION:** `sharp` ships LGPL-3.0 libvips (dynamic, unmodified). Spec allows only permissive licenses. Accept or replace sharp.
+- sharp: closed. Only reached via wrangler and apps/docs; installers exclude node_modules.
 - Package workflow fixes: Windows needs `shell` for pnpm (done), Linux needs `rpm` apt package (done). macOS/Windows packaging results: see latest `package` run.
 - Packages are unsigned; signing/notarization needs the user's certificates.
 
@@ -138,5 +138,5 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 
 ### Release
 - Package run 45234612521 green on all 3 OS. Release (prerelease): https://github.com/DeepuExplainsAi/super-agent-app/releases/tag/v0.1.177 (exe, 2 dmg, AppImage, deb, rpm). Release notes list what is not done.
-- OPEN for the user: live chat test with own key; sharp LGPL decision; real run of the installers.
-- OPEN for next agent: Part 4b (failover as bot engine driver), Part 5b (Stagehand, Crawlee, Electron-Node for npx), brand cleanup (HTML previews in repo root, docs naming), Crawl4AI credit only needed if added.
+- OPEN for the user: live chat test with own key; real run of the installers. (sharp: closed, not shipped, see scripts/license-exceptions.json.)
+- OPEN for next agent: Part 5b rest (Stagehand, Crawlee, Node for npx), brand cleanup (OMB_* env names, openmausbot protocol/bin/bonjour, locale strings, root *-preview.html and maus.ps1), real-binary test of the failover driver.
