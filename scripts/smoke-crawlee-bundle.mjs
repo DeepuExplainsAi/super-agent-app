@@ -11,7 +11,7 @@ const out = mkdtempSync(join(tmpdir(), "sa-crawlee-"));
 await build({
   entryPoints: [join(root, "packages/automation/src/crawlee.ts")], bundle: true, platform: "node", format: "esm", keepNames: true, logLevel: "error",
   outfile: join(out, "crawlee.mjs"),
-  banner: { js: 'import { createRequire as a } from "node:module";import { fileURLToPath as b } from "node:url";import { dirname as c } from "node:path";const require = a(import.meta.url);const __filename = b(import.meta.url);const __dirname = c(__filename);' },
+  banner: { js: 'import { createRequire as __saCreateRequire } from "node:module";import { fileURLToPath as __saFileURL } from "node:url";import { dirname as __saDirname } from "node:path";const require = __saCreateRequire(import.meta.url);const __filename = __saFileURL(import.meta.url);const __dirname = __saDirname(__filename);' },
 });
 const store = join(root, "node_modules", ".pnpm");
 cpSync(join(store, readdirSync(store).find((n) => n.startsWith("header-generator@")), "node_modules/header-generator/data_files"), join(out, "data_files"), { recursive: true });
