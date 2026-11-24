@@ -200,8 +200,8 @@ describe("outward links", () => {
     expect(DOCS_URL).toBe("https://github.com/DeepuExplainsAi/super-agent-app/tree/main/docs");
   });
 
-  it("sends Send Feedback to the Discord community", () => {
-    expect(FEEDBACK_URL).toBe("https://discord.gg/9Wb8MEpXRs");
+  it("sends Send Feedback to this repo's issues", () => {
+    expect(FEEDBACK_URL).toBe("https://github.com/DeepuExplainsAi/super-agent-app/issues");
   });
 });
 

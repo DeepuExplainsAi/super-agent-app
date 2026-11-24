@@ -6,10 +6,10 @@ export const APPROVAL_LEVELS_URL = `${APP_REPOSITORY}/blob/main/docs/approval-le
 export const PASSKEY_HELP_URL = DOCS_URL;
 export const FEEDBACK_URL = `${APP_REPOSITORY}/issues`;
 export const RELEASES_URL = `${APP_REPOSITORY}/releases`;
-export const PRICING_URL = RELEASES_URL;
+export const PRICING_URL = "https://www.openmausbot.com/pricing";
 /** The website's Team plans: `#teams` opens the pricing page on its Team tab. */
 export const TEAM_PLANS_URL = `${PRICING_URL}#teams`;
-export const CLOUD_PLAN_URL = RELEASES_URL;
+export const CLOUD_PLAN_URL = "https://cloud.openmausbot.com/cloud";
 /** The Admin's team People page (openmaus-cloud docs/team-seats.md): people, seats and roles are managed there, never in
  * the app. `invite` opens its invite box (Owner and Admins); `seats` its seat stepper (the Owner, whose card pays). */
 export const TEAM_PEOPLE_PAGES = { invite: "people?do=invite", seats: "people?do=seats" } as const;
