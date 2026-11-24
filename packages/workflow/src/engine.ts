@@ -1,3 +1,4 @@
+import { Annotation, END, START, StateGraph } from "@langchain/langgraph";
 import type { Actions, RunRecord, RunStore, WorkflowDef, WorkflowEdge } from "./types.ts";
 
 const MAX_STEPS = 1000;
@@ -20,46 +21,61 @@ export interface Engine {
 export function createEngine(options: { actions: Actions; store: RunStore }): Engine {
   const { actions, store } = options;
 
-  async function drive(def: WorkflowDef, run: RunRecord): Promise<RunRecord> {
-    for (let steps = 0; run.status === "running" && steps < MAX_STEPS; steps++) {
-      if (!run.current) {
-        run.status = "done";
-        break;
-      }
-      const node = def.nodes[run.current];
-      if (!node) {
-        run.status = "failed";
-        run.error = `unknown node ${run.current}`;
-        break;
-      }
-      if (node.type === "approval") {
-        run.status = "waiting";
-        break;
-      }
-      const action = actions[node.action];
-      if (!action) {
-        run.status = "failed";
-        run.error = `unknown action ${node.action}`;
-        break;
-      }
-      let failure: string | undefined;
-      for (let attempt = 0; attempt <= (node.retries ?? 0); attempt++) {
-        try {
-          run.state[node.saveAs ?? run.current] = await action(node.input, run.state);
-          failure = undefined;
-          break;
-        } catch (error) {
-          failure = error instanceof Error ? error.message : String(error);
-        }
-      }
-      run.history.push({ node: run.current, ok: !failure, ...(failure ? { error: failure } : {}) });
-      if (failure) {
-        run.status = "failed";
-        run.error = failure;
-      } else {
-        run.current = nextNode(def, run.current, run.state);
-      }
+  /** Runs one node and returns the next node name (null = the graph ends here). Every step is checkpointed. */
+  async function step(def: WorkflowDef, run: RunRecord, name: string): Promise<string | null> {
+    const node = def.nodes[name]!;
+    if (node.type === "approval") {
+      run.status = "waiting";
       await store.save(run);
+      return null;
+    }
+    const action = actions[node.action];
+    if (!action) return fail(run, `unknown action ${node.action}`);
+    let failure: string | undefined;
+    for (let attempt = 0; attempt <= (node.retries ?? 0); attempt++) {
+      try {
+        run.state[node.saveAs ?? name] = await action(node.input, run.state);
+        failure = undefined;
+        break;
+      } catch (error) {
+        failure = error instanceof Error ? error.message : String(error);
+      }
+    }
+    run.history.push({ node: name, ok: !failure, ...(failure ? { error: failure } : {}) });
+    if (failure) return fail(run, failure);
+    const next = nextNode(def, name, run.state);
+    if (next && !def.nodes[next]) return fail(run, `unknown node ${next}`);
+    run.current = next;
+    if (!next) run.status = "done";
+    await store.save(run);
+    return next;
+  }
+
+  async function fail(run: RunRecord, error: string): Promise<null> {
+    run.status = "failed";
+    run.error = error;
+    await store.save(run);
+    return null;
+  }
+
+  /** LangGraph walks the graph; the run record in `store` is the checkpoint, so a restart re-enters at `run.current`. */
+  async function drive(def: WorkflowDef, run: RunRecord): Promise<RunRecord> {
+    if (run.status !== "running") return run;
+    if (!run.current) {
+      run.status = "done";
+    } else if (!def.nodes[run.current]) {
+      await fail(run, `unknown node ${run.current}`);
+    } else {
+      // Node names are user data, so the graph is built with loose types; the state channel name cannot clash with them.
+      const Flow = Annotation.Root({ _saNext: Annotation<string | null> });
+      const graph = new StateGraph(Flow) as any;
+      const route = (state: typeof Flow.State) => state._saNext ?? END;
+      for (const name of Object.keys(def.nodes)) {
+        graph.addNode(name, async () => ({ _saNext: await step(def, run, name) }));
+        graph.addConditionalEdges(name, route);
+      }
+      graph.addConditionalEdges(START, route);
+      await graph.compile().invoke({ _saNext: run.current }, { recursionLimit: MAX_STEPS });
     }
     await store.save(run);
     return run;
