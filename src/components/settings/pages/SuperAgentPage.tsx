@@ -66,6 +66,39 @@ function ModelsGroup() {
   );
 }
 
+function TeamsGroup() {
+  const [enabled, setEnabled] = useState<boolean | null>(null);
+  const [task, setTask] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [error, setError] = useState("");
+  useEffect(() => { void api<{ enabled: boolean }>("/api/sa/agents").then((r) => setEnabled(r.enabled), () => {}); }, []);
+  if (enabled === null) return null;
+  const run = () => {
+    setAnswer("…"); setError("");
+    void send<{ answer: string }>("POST", "/api/sa/agents/team", {
+      task, rounds: 1,
+      roles: [{ name: "Researcher", instructions: "Gather the key facts and options." }, { name: "Critic", instructions: "Point out risks and gaps." }],
+    }).then((r) => setAnswer(r.answer), (failure: Error) => { setAnswer(""); setError(failure.message); });
+  };
+  return (
+    <SettingsGroup label="Multi-agent team" description="A Researcher and a Critic discuss your task, then a lead writes the answer. Uses the model chain above. Off by default.">
+      <SettingsRows>
+        <SettingRow title="Enable teams" subtitle="Adds the team route and the workflow action `team`.">
+          <Switch checked={enabled} aria-label="Enable teams" onClick={() => void send("PUT", "/api/sa/agents", { enabled: !enabled }).then(() => setEnabled(!enabled))} />
+        </SettingRow>
+        {enabled && (
+          <div className="flex flex-col gap-2 px-4 py-3">
+            <input className={SETTINGS_INPUT} value={task} placeholder="Task for the team" onChange={(e) => setTask(e.target.value)} />
+            <button type="button" className={PRIMARY_BUTTON} disabled={!task.trim()} onClick={run}>Run team</button>
+            {answer && <div className="whitespace-pre-wrap text-[13px] text-ink">{answer}</div>}
+            {error && <div role="alert" className="text-[12px] text-danger">{error}</div>}
+          </div>
+        )}
+      </SettingsRows>
+    </SettingsGroup>
+  );
+}
+
 function AutomationGroup() {
   const [state, setState] = useState<Automation | null>(null);
   const [url, setUrl] = useState("");
@@ -128,7 +161,7 @@ function WorkflowsGroup() {
   };
   const answer = (approved: boolean) => run && void send<Run>("POST", `/api/sa/runs/${run.runId}/resume`, { approved }).then(setRun, fail);
   return (
-    <SettingsGroup label="Workflows" description="Nodes and edges as JSON. Actions: model, crawl, webhook. An approval node waits for you, and a run survives a restart.">
+    <SettingsGroup label="Workflows" description="Nodes and edges as JSON. Actions: model, crawl, webhook, team. An approval node waits for you, and a run survives a restart.">
       <SettingsRows>
         <div className="flex flex-col gap-2 px-4 py-3">
           <textarea className={`${SETTINGS_INPUT} h-56 py-2 font-mono`} spellCheck={false} value={text} onChange={(e) => setText(e.target.value)} />
@@ -152,5 +185,5 @@ export function SuperAgentPage() {
   useEffect(() => { void api<{ packages: { name: string }[] }>("/api/sa/packages").then((r) => setNames(r.packages.map((p) => p.name)), () => setNames([])); }, []);
   if (!names) return null;
   const has = (name: string) => names.includes(`@super-agent/${name}`);
-  return <>{has("models") && <ModelsGroup />}{has("automation") && <AutomationGroup />}{has("compute") && <JobsGroup />}{has("workflow") && <WorkflowsGroup />}</>;
+  return <>{has("models") && <ModelsGroup />}{has("agents") && <TeamsGroup />}{has("automation") && <AutomationGroup />}{has("compute") && <JobsGroup />}{has("workflow") && <WorkflowsGroup />}</>;
 }

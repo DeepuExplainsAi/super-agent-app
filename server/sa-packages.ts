@@ -1,3 +1,4 @@
+import agents from "../packages/agents/manifest.json" with { type: "json" };
 import automation from "../packages/automation/manifest.json" with { type: "json" };
 import compute from "../packages/compute/manifest.json" with { type: "json" };
 import models from "../packages/models/manifest.json" with { type: "json" };
@@ -18,7 +19,7 @@ export interface PackageManifest {
 
 /** Every `packages/*\/manifest.json`. Imported statically so the bundled server (no packages/ folder) still lists them;
  * `sa-packages.test.ts` fails when this list and the folder disagree. */
-export const PACKAGE_MANIFESTS: readonly PackageManifest[] = [automation, compute, models, theme, workflow];
+export const PACKAGE_MANIFESTS: readonly PackageManifest[] = [agents, automation, compute, models, theme, workflow];
 
 export const APP_PROFILES: Record<string, { name: string; packages: string[] }> = {
   "main-app": mainApp, "bot-app": botApp, "automation-app": automationApp, "workflow-app": workflowApp,

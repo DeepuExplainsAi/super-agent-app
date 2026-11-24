@@ -27,6 +27,7 @@
     "packages/models/src",
     "packages/automation/src",
     "packages/workflow/src",
+    "packages/agents/src",
     "packages/compute/src"
   ],
   "exclude": [

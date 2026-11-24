@@ -1,6 +1,7 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { delimiter, join } from "node:path";
 import { existsSync } from "node:fs";
+import { runTeam, type Role } from "../packages/agents/src/index.ts";
 import { browsersInstalled, bundledRuntime, crawlWithCrawlee as crawl, installBrowsers, playwrightMcpServer } from "../packages/automation/src/index.ts";
 import { createJobQueue, type JobQueue } from "../packages/compute/src/index.ts";
 import {
@@ -30,7 +31,7 @@ const npxOnPath = (env: NodeJS.ProcessEnv) =>
   Boolean(bundledRuntime(env)) || (env.PATH ?? "").split(delimiter).some((dir) => dir && ["npx", "npx.cmd"].some((name) => existsSync(join(dir, name))));
 const SETTINGS_FILE = "super-agent.json";
 
-interface Settings { order: string[]; localaiUrl?: string }
+interface Settings { order: string[]; localaiUrl?: string; agentsEnabled?: boolean }
 
 /** Everything under /api/sa: package list, browser setup, jobs, workflows, model failover. Owner/admin only. */
 export function createSuperAgent(deps: SuperAgentDeps) {
@@ -58,7 +59,18 @@ export function createSuperAgent(deps: SuperAgentDeps) {
     return { text, ...(provider ? { provider } : {}), notices };
   }
 
+  const team = (input: { task?: unknown; roles?: unknown; lead?: unknown; rounds?: unknown }) => {
+    if (!settings.agentsEnabled) throw new Error("Multi-agent teams are off. Turn them on in Settings > Automation & models.");
+    const isRole = (value: unknown): value is Role => Boolean(value) && typeof (value as Role).name === "string" && typeof (value as Role).instructions === "string";
+    if (typeof input.task !== "string" || !input.task.trim()) throw new Error("task required.");
+    if (!Array.isArray(input.roles) || !input.roles.length || input.roles.length > 8 || !input.roles.every(isRole)) throw new Error("roles: 1 to 8 items of { name, instructions }.");
+    const lead = isRole(input.lead) ? input.lead : { name: "Lead", instructions: "Combine the team's work into one clear answer." };
+    const say = async (system: string, transcript: string) => (await chat([{ role: "system", content: system }, { role: "user", content: transcript }])).text;
+    return runTeam({ task: input.task, roles: input.roles, lead, say, ...(typeof input.rounds === "number" ? { rounds: input.rounds } : {}) });
+  };
+
   const actions: Actions = {
+    team: async (input) => team((input ?? {}) as Parameters<typeof team>[0]),
     webhook: webhookAction,
     crawl: async (input) => { const { url, maxPages } = input as { url: string; maxPages?: number }; return crawl(url, { maxPages: maxPages ?? 5 }); },
     model: async (input) => chat([{ role: "user", content: String((input as { prompt?: unknown })?.prompt ?? "") }]),
@@ -79,8 +91,8 @@ export function createSuperAgent(deps: SuperAgentDeps) {
     await loaded;
     const loadedNames = new Set(loadedPackages(deps.env).map((m) => m.name));
     const needs = (name: string) => loadedNames.has(`@super-agent/${name}`);
-    const group = /^\/api\/sa\/(automation|crawl|jobs|workflows|runs|models)/.exec(path)?.[1];
-    const owner = group && { automation: "automation", crawl: "automation", jobs: "compute", workflows: "workflow", runs: "workflow", models: "models" }[group]!;
+    const group = /^\/api\/sa\/(automation|crawl|jobs|workflows|runs|models|agents)/.exec(path)?.[1];
+    const owner = group && { automation: "automation", crawl: "automation", jobs: "compute", workflows: "workflow", runs: "workflow", models: "models", agents: "agents" }[group]!;
     if (owner && !needs(owner)) return json(res, 404, { error: "This app does not include that package." });
     const body = async () => (await readBody(req)) ?? {};
 
@@ -152,6 +164,17 @@ export function createSuperAgent(deps: SuperAgentDeps) {
       return json(res, 200, await engine.resume(def, record.runId, typeof approved === "boolean" ? { approved } : undefined));
     }
 
+    if (path === "/api/sa/agents" && method === "GET") return json(res, 200, { enabled: Boolean(settings.agentsEnabled) });
+    if (path === "/api/sa/agents" && method === "PUT") {
+      const { enabled } = await body() as { enabled?: unknown };
+      if (typeof enabled !== "boolean") return json(res, 400, { error: "enabled must be true or false." });
+      settings.agentsEnabled = enabled; await saveSettings();
+      return json(res, 200, { enabled });
+    }
+    if (path === "/api/sa/agents/team" && method === "POST") {
+      try { return json(res, 200, await team(await body() as Parameters<typeof team>[0])); }
+      catch (error) { return json(res, error instanceof ProviderError ? 503 : 400, { error: error instanceof Error ? error.message : "Team run failed." }); }
+    }
     if (path === "/api/sa/models" && method === "GET") {
       const all = providers();
       const status = await Promise.all(all.map(async (p) => ({ id: p.id, ...(await p.status().catch(() => ({ signedIn: false, note: "Not reachable." }))) })));

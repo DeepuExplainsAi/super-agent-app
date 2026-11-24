@@ -1,1 +1,1 @@
-{ "name": "Super Agent Bot", "packages": ["@super-agent/theme", "@super-agent/models"] }
+{ "name": "Super Agent Bot", "packages": ["@super-agent/theme", "@super-agent/models", "@super-agent/agents"] }

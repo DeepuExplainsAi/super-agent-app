@@ -30,6 +30,16 @@ describe("super agent routes", () => {
     expect((await setup().call("GET", "/api/sa/packages", undefined, phone)).status).toBe(403);
   });
 
+  it("runs a team only after the flag is turned on", async () => {
+    const t = setup([fake("kiro", true, "ok")]);
+    const roles = [{ name: "A", instructions: "Help." }];
+    expect((await t.call("POST", "/api/sa/agents/team", { task: "x", roles })).status).toBe(400);
+    expect((await t.call("PUT", "/api/sa/agents", { enabled: true })).body.enabled).toBe(true);
+    const reply = await t.call("POST", "/api/sa/agents/team", { task: "x", roles });
+    expect(reply.body).toMatchObject({ answer: "ok", transcript: [{ role: "A", text: "ok" }] });
+    expect((await t.call("POST", "/api/sa/agents/team", { task: "x", roles: [] })).status).toBe(400);
+  });
+
   it("lists package manifests", async () => {
     const reply = await setup().call("GET", "/api/sa/packages");
     expect((reply.body.packages as { name: string }[]).map((p) => p.name)).toContain("@super-agent/automation");

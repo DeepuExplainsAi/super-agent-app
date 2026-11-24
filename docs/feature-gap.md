@@ -22,3 +22,8 @@ Checked against the repo on 2026-11-23 (file/folder presence, not live behaviour
   already approximates with bot-to-bot calls and its coding drivers. Not added. Revisit only if the user asks, as a separate sidecar.
 - Goose / Hermes / OpenClaw / Rakazo: nothing to copy, nothing missing. No Rakazo code was brought in, so no Rakazo THIRD_PARTY entry.
 - Feature flags: not needed for items that already ship. New packages stay unwired (library only) until their wiring part.
+
+## Update 2026-11-24: `packages/agents`
+- Added `runTeam` (AutoGen/CrewAI-style group chat): roles take turns on a shared transcript, a lead writes the answer. Own code, no dependency,
+  runs on the model failover chain. Off by default (`PUT /api/sa/agents`), route `POST /api/sa/agents/team`, workflow action `team`, Settings group "Multi-agent team".
+- Still not added: CrewAI, MetaGPT, OpenHands, Aider as libraries (Python runtimes, would need a bundled sidecar).
