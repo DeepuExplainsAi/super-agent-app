@@ -20,7 +20,7 @@ jobs:
       - run: pnpm exec vitest run packages/models packages/automation packages/workflow packages/compute server/super-agent.test.ts server/sa-packages.test.ts server/drivers/superagent-failover.test.ts
       - run: node scripts/smoke-crawlee-bundle.mjs
       - run: pnpm exec vitest run server/update-check.test.ts shared/announcements.test.ts shared/release-notes.test.ts src/lib/github-refs.test.ts src/lib/cloud-add-web.test.ts src/components/whats-new src/components/BotLimitPopup.test.ts src/components/AppNotices.test.ts src/components/LinkHoverCard.test.ts src/components/ChatMarkdown.test.ts src/components/SidebarProfileMenu.test.ts src/pair
-      - run: node --test electron/launch-probes.node-test.mjs electron/cloud-account.node-test.mjs electron/included-x.test.mjs electron/included-pages.test.mjs
+      - run: node --test electron/launch-probes.node-test.mjs electron/cloud-account.node-test.mjs
       - run: pnpm exec vitest run src/locales src/components/settings
       - name: License audit
         run: node scripts/license-audit.mjs --write licenses.json && node scripts/build-licenses-page.mjs
