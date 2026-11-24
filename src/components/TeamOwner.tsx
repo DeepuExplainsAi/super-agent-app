@@ -33,7 +33,7 @@ export function OwnerPickerHost() {
 }
 
 const initial = (person: TeamPerson) => person.name.trim().charAt(0).toUpperCase() || "?";
-const HUES = ["bg-[#5B8DEF]", "bg-[#E0745B]", "bg-[#4FAF7F]", "bg-[#B26BD9]", "bg-[#D9A23B]", "bg-[#3BA7B8]"];
+const HUES = ["bg-[var(--identity-blue)]", "bg-[var(--identity-coral)]", "bg-[var(--identity-green)]", "bg-[var(--identity-purple)]", "bg-[var(--identity-yellow)]", "bg-[var(--identity-cyan)]"];
 const hueOf = (email: string) => HUES[[...email].reduce((sum, char) => sum + char.charCodeAt(0), 0) % HUES.length];
 
 /** A teammate's picture, or their initial when they have none or it fails to load. */

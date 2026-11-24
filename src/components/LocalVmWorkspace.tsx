@@ -385,7 +385,7 @@ function LocalVmPane({
       <div
         ref={viewportRef}
         data-native-view-host
-        className="relative min-h-0 flex-1 bg-[#070707]"
+        className="relative min-h-0 flex-1 bg-panel"
       >
         <div className="absolute inset-0 flex items-center justify-center p-6 text-center">
           {!bot ? (
