@@ -138,5 +138,6 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 
 ### Release
 - Package run 45234612521 green on all 3 OS. Release (prerelease): https://github.com/DeepuExplainsAi/super-agent-app/releases/tag/v0.1.177 (exe, 2 dmg, AppImage, deb, rpm). Release notes list what is not done.
+- Release v0.1.178 (prerelease, 6 assets, package run 45341814154 green): https://github.com/DeepuExplainsAi/super-agent-app/releases/tag/v0.1.178. Sandbox disk is 2 GB: download and upload one artifact at a time.
 - OPEN for the user: live chat test with own key; real run of the installers. (sharp: closed, not shipped, see scripts/license-exceptions.json.)
 - OPEN for next agent: Part 5b rest (Stagehand, Crawlee, Node for npx), brand cleanup (OMB_* env names, openmausbot protocol/bin/bonjour, locale strings, root *-preview.html and maus.ps1), real-binary test of the failover driver.
