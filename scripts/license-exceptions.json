@@ -11,5 +11,6 @@
  "elkjs": "EPL-2.0 weak copyleft, unmodified dependency (graph layout)",
  "khroma": "package.json has no license field; repo LICENSE is MIT (checked on GitHub)",
  "@img/sharp": "LGPL-3.0 libvips. Not shipped: sharp is reached only through wrangler (dev tool) and apps/docs (docs site), and the installers exclude node_modules (electron-builder.yml). No decision needed unless sharp becomes a runtime dependency.",
- "@img/sharp-libvips": "LGPL-3.0 libvips. Not shipped: sharp is reached only through wrangler (dev tool) and apps/docs (docs site), and the installers exclude node_modules (electron-builder.yml). No decision needed unless sharp becomes a runtime dependency."
+ "@img/sharp-libvips": "LGPL-3.0 libvips. Not shipped: sharp is reached only through wrangler (dev tool) and apps/docs (docs site), and the installers exclude node_modules (electron-builder.yml). No decision needed unless sharp becomes a runtime dependency.",
+ "map-stream": "package.json has no license field; the shipped LICENCE file is the MIT text (checked in the 0.1.0 tarball). Pulled in via Crawlee's dependency tree"
 }
