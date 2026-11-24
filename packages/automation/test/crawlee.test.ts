@@ -4,8 +4,8 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { crawlWithCrawlee } from "../src/index.ts";
 
 const site: Record<string, string> = {
-  "/": '<title>Home</title><script>var x=1</script><a href="/two">two</a><a href="http://other.invalid/">out</a>',
-  "/two": "<title>Two</title><p>second page</p>",
+  "/": '<html><head><title>Home</title></head><body><script>var x=1</script><a href="/two">two</a><a href="http://other.invalid/">out</a></body></html>',
+  "/two": "<html><head><title>Two</title></head><body><p>second page</p></body></html>",
 };
 const server = createServer((req, res) => {
   const body = site[req.url ?? ""];
