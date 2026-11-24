@@ -24,7 +24,7 @@ test("a request is kept as the kind of its host; this computer is not a request 
   assert.equal(hostKind("https://accounts.openmausbot.com/token?code=abc"), "accounts");
   assert.equal(hostKind("https://omb-u-1.fly.dev/api/bots"), "cloud");
   assert.equal(hostKind(new URL("https://c-opaque.openmausbot.com/x")), "cloud");
-  assert.equal(hostKind({ url: "https://github.com/milind-soni/OpenMausBot/releases" }), "updates");
+  assert.equal(hostKind({ url: "https://github.com/DeepuExplainsAi/super-agent-app/releases" }), "updates");
   assert.equal(hostKind("https://raw.githubusercontent.com/x/y"), "updates");
   assert.equal(hostKind("https://intranet.acme.test/q?token=abc"), "other");
   assert.equal(hostKind("https://github.com.evil.test/"), "other");
