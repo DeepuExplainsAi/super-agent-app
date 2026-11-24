@@ -18,6 +18,7 @@ jobs:
       - run: node scripts/check-skin-contrast.mjs
       - run: pnpm typecheck
       - run: pnpm exec vitest run packages/models packages/automation packages/workflow packages/compute server/super-agent.test.ts server/sa-packages.test.ts server/drivers/superagent-failover.test.ts
+      - run: node scripts/smoke-crawlee-bundle.mjs
       - run: pnpm exec vitest run src/locales src/components/settings
       - name: License audit
         run: node scripts/license-audit.mjs --write licenses.json && node scripts/build-licenses-page.mjs

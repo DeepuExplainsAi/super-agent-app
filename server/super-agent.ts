@@ -1,7 +1,7 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { delimiter, join } from "node:path";
 import { existsSync } from "node:fs";
-import { browsersInstalled, crawl, installBrowsers, playwrightMcpServer } from "../packages/automation/src/index.ts";
+import { browsersInstalled, crawlWithCrawlee as crawl, installBrowsers, playwrightMcpServer } from "../packages/automation/src/index.ts";
 import { createJobQueue, type JobQueue } from "../packages/compute/src/index.ts";
 import {
   createFailoverChain, createKiro, createLocalAi, createOpenCode, createOpenRouter, DEFAULT_ORDER, ProviderError,

@@ -2,7 +2,7 @@
 // packaged app ships no node_modules. Entry points keep their exact relative
 // paths under dist-server, where the server locates each proxy by path.
 import { build } from "esbuild";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { serverLocalePlugin } from "./server-locale-plugin.mjs";
@@ -25,7 +25,7 @@ const yamlEsmPlugin = {
 // only through a require of its own (esbuild otherwise throws "Dynamic require
 // of "events" is not supported" when it loads).
 const NODE_REQUIRE = {
-  js: 'import { createRequire as __ombCreateRequire } from "node:module";\nconst require = __ombCreateRequire(import.meta.url);',
+  js: 'import { createRequire as __ombCreateRequire } from "node:module";\nimport { fileURLToPath as __ombFileURL } from "node:url";\nimport { dirname as __ombDirname } from "node:path";\nconst require = __ombCreateRequire(import.meta.url);\nconst __filename = __ombFileURL(import.meta.url);\nconst __dirname = __ombDirname(__filename);',
 };
 
 // Every file run as its own process.
@@ -80,6 +80,8 @@ await build({
   // Function names stay in stack traces. Node prints a whole source line with an uncaught error, so no line may be long.
   minifyWhitespace: true,
   minifySyntax: true,
+  // Crawlee's storage clients are looked up by class name.
+  keepNames: true,
   lineLimit: 500,
   // Written after tsc, replacing its output for these entry points.
   allowOverwrite: true,
@@ -131,6 +133,12 @@ await build({
 // The packaged desktop and the container launcher run this bootstrap to turn on Node's compile cache.
 // Copied, not bundled: esbuild would inline index.js into it.
 copyFileSync(join(root, "scripts", "desktop-server-entry.mjs"), join(root, "dist-server", "desktop-entry.mjs"));
+
+// Crawlee's header-generator reads its data files from beside the bundle (__dirname/data_files).
+const pnpmStore = join(root, "node_modules", ".pnpm");
+const headerGen = readdirSync(pnpmStore).find((name) => name.startsWith("header-generator@"));
+if (!headerGen) throw new Error("header-generator not installed: Crawlee needs its data files beside the bundle");
+cpSync(join(pnpmStore, headerGen, "node_modules", "header-generator", "data_files"), join(root, "dist-server", "data_files"), { recursive: true });
 
 // The model catalog snapshot (server/model-catalog/catalog.ts) is read from
 // disk, not inlined: 1.5 MB of JSON has no place in index.js. The bundle looks
