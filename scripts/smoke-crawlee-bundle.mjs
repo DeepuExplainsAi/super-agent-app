@@ -4,7 +4,8 @@ import { createServer } from "node:http";
 import { cpSync, mkdtempSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { spawnSync } from "node:child_process";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 
 const root = join(import.meta.dirname, "..");
 const out = mkdtempSync(join(tmpdir(), "sa-crawlee-"));
@@ -18,7 +19,7 @@ cpSync(join(store, readdirSync(store).find((n) => n.startsWith("header-generator
 const server = createServer((_, res) => res.writeHead(200, { "content-type": "text/html" }).end("<title>Bundled</title><p>ok</p>"));
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const url = `http://127.0.0.1:${server.address().port}/`;
-const run = spawnSync(process.execPath, ["--input-type=module", "-e", `import { crawlWithCrawlee } from ${JSON.stringify(join(out, "crawlee.mjs"))}; console.log(JSON.stringify(await crawlWithCrawlee(${JSON.stringify(url)}, { maxPages: 1 })));`], { encoding: "utf8", cwd: out });
+const run = await promisify(execFile)(process.execPath, ["--input-type=module", "-e", `import { crawlWithCrawlee } from ${JSON.stringify(join(out, "crawlee.mjs"))}; console.log(JSON.stringify(await crawlWithCrawlee(${JSON.stringify(url)}, { maxPages: 1 })));`], { encoding: "utf8", cwd: out }).catch((e) => e);
 server.close();
 let pages = [];
 try { pages = JSON.parse(run.stdout.trim().split("\n").at(-1) ?? "[]"); } catch {}
