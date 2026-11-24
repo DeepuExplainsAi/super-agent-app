@@ -164,3 +164,10 @@ Spec: `ARCHITECTURE.md`. Task list: `TODO.md`. Licenses: `THIRD_PARTY.md`.
 ### Part 7b + brand strings (2026-11-24)
 - verify green on both (runs 45389557947, 45389413297). Visible "OpenMaus"/"Maus" copy replaced in en.json; the 3 keys were dropped from other locales (English fallback), hashes re-recorded.
 - Version bumped to 0.1.179; package run + release v0.1.179 follow (see Release section below once published).
+
+### Release v0.1.179 (2026-11-24)
+- Published (prerelease): https://github.com/DeepuExplainsAi/super-agent-app/releases/tag/v0.1.179 (exe, 2 dmg, AppImage, deb, rpm). Package run 45390244881 green on all 3 OS, built from the commit before this handoff edit. Notes list what is not done.
+- Includes: LangGraph workflow, packages/agents (flagged), Crawlee, Stagehand lib, bundled Playwright MCP, token colors, brand text cleanup.
+- OPEN for the user: live chat with own OpenRouter key; run the installers on a real PC.
+- OPEN for next agent: Kiro real-binary test, Stagehand live test, visual workflow canvas (JSON editor only), optional internal rename (OMB_*, openmausbot://, ~/.openmausbot), CrewAI/MetaGPT/OpenHands/Aider as sidecars only if the user asks.
+- Release upload tip: `gh run download <id> -R <repo> -n <artifact>` is slow (about 3 min per 600 MB); do one artifact at a time, delete after upload.
