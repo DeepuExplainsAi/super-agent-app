@@ -30,6 +30,7 @@
 | playwright 1.65.1 | Apache-2.0 | browser download on first run |
 | @crawlee/cheerio 3.18.2 | Apache-2.0 | packages/automation/src/crawlee.ts; bundled into the server (needs header-generator data_files beside the bundle). Dependency tree audited: no GPL |
 | @browserbasehq/stagehand 4.4.0 | MIT | packages/automation/src/stagehand.ts; lazy import, user's own model key, local browser only (no Browserbase cloud) |
+| @langchain/langgraph 1.7.5, @langchain/core 1.5.1 | MIT | packages/workflow/src/engine.ts; runs the workflow graph, checkpoints stay in our file store. Unmodified dependency |
 
 ## Excluded on purpose
 - `enterprise/` (OpenMausBot Enterprise License, source-available, not permissive).

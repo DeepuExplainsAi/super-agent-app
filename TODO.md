@@ -5,7 +5,7 @@
 - [x] Part 3: Phase 1 - packages/theme Agent skin (hex cleanup + Lucide swap left as polish)
 - [x] Part 4: Phase 2 - packages/models library done (wiring into server = Part 4b, pending)
 - [x] Part 5: Phase 3 - `packages/automation` done as a library (Playwright MCP entry, browser first-run install, static crawler). Wiring + Stagehand/Crawlee/Browser Use pending (Part 5b)
-- [ ] Part 6: Phase 4 - `packages/workflow` (LangGraph.js, JSON editor, webhook node)
+- [x] Part 6: Phase 4 `packages/workflow` on LangGraph.js (done)
 - [ ] Part 7: Phase 5 - `packages/agents` (feature-flagged; write docs/feature-gap.md first)
 - [ ] Part 8: Phase 6 - `packages/compute` job runner
 - [ ] Part 9: Phase 7 - GitHub Actions builds (win/mac/linux) + license audit + licenses screen
