@@ -11,8 +11,8 @@ export async function crawlWithCrawlee(startUrl: string, options: { maxPages?: n
     maxRequestRetries: 1,
     requestHandlerTimeoutSecs: 20,
     async requestHandler({ request, $, enqueueLinks }) {
-      $("script,style,head").remove();
       const title = $("title").first().text().trim();
+      $("script,style,head,title").remove();
       const links = new Set<string>();
       await enqueueLinks({ strategy: options.sameOrigin === false ? "all" : "same-origin", transformRequestFunction: (r) => (links.add(r.url), r) });
       pages.push({ url: request.loadedUrl ?? request.url, title, text: $.root().text().replace(/\s+/g, " ").trim(), links: [...links] });
