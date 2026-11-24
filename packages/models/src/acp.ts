@@ -53,7 +53,7 @@ class AcpConnection {
       child.once("error", (e: NodeJS.ErrnoException) =>
         reject(new ProviderError(this.options.id, "unavailable", e.code === "ENOENT" ? `${this.options.command} is not installed` : e.message)));
     });
-    child.stderr.on("data", () => {});
+    child.stderr.on("data", (d) => { if (process.env.ACP_DEBUG) process.stderr.write(d); });
     child.stdout.setEncoding("utf8");
     child.stdout.on("data", (chunk: string) => this.read(chunk));
     child.once("exit", () => {
@@ -123,6 +123,15 @@ export function kindForAcpError(error: Json): ProviderError["kind"] {
   return "other";
 }
 
+/** Models a new session offers: the `models` block (Kiro) or the `model` config option (OpenCode 1.19+). */
+export function sessionModels(session: Json): { id: string; name: string }[] {
+  const legacy = (session?.models?.availableModels ?? []) as Json[];
+  if (legacy.length) return legacy.map((m) => ({ id: String(m.modelId ?? m.id), name: String(m.name ?? m.modelId ?? m.id) }));
+  const option = ((session?.configOptions ?? []) as Json[]).find((o) => o.id === "model" || o.category === "model");
+  const flat = ((option?.options ?? []) as Json[]).flatMap((o) => (Array.isArray(o.options) ? o.options : [o]));
+  return flat.map((m) => ({ id: String(m.value), name: String(m.name ?? m.value) }));
+}
+
 /** Pure mapping of a `session/update` notification to chat events (exported for tests). */
 export function updateToEvents(update: Json): ChatEvent[] {
   if (update?.sessionUpdate === "agent_message_chunk" && update.content?.type === "text" && update.content.text) {
@@ -151,8 +160,7 @@ export function createAcpProvider(options: AcpProviderOptions): ModelProvider {
     async listModels(): Promise<ModelInfo[]> {
       await connection.start();
       const session = await connection.request("session/new", { cwd: options.cwd ?? process.cwd(), mcpServers: [] });
-      const models = (session?.models?.availableModels ?? []) as Json[];
-      return models.map((m) => ({ id: String(m.modelId ?? m.id), name: m.name ?? String(m.modelId ?? m.id) }));
+      return sessionModels(session);
     },
     async *chat(req: ChatRequest): AsyncGenerator<ChatEvent> {
       active++; clearTimeout(idleTimer);
@@ -170,8 +178,9 @@ export function createAcpProvider(options: AcpProviderOptions): ModelProvider {
         await connection.start();
         const session = await connection.request("session/new", { cwd: options.cwd ?? process.cwd(), mcpServers: [] });
         sessionId = String(session.sessionId);
-        if (req.model && session?.models?.availableModels?.some((m: Json) => (m.modelId ?? m.id) === req.model)) {
-          await connection.request("session/set_model", { sessionId, modelId: req.model });
+        if (req.model && sessionModels(session).some((m) => m.id === req.model)) {
+          if (session?.models) await connection.request("session/set_model", { sessionId, modelId: req.model });
+          else await connection.request("session/set_config_option", { sessionId, configId: "model", value: req.model });
         }
         stopListening = connection.listen((msg) => {
           if (msg.method === "session/update" && msg.params?.sessionId === sessionId) {

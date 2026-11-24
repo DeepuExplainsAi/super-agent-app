@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createFailoverChain, createLocalAi, createOpenRouter, ProviderError, type ChatEvent, type ModelProvider } from "../src/index.ts";
-import { kindForAcpError, updateToEvents } from "../src/acp.ts";
+import { createAcpProvider, kindForAcpError, sessionModels, updateToEvents } from "../src/acp.ts";
 import { kindForStatus } from "../src/openai-compat.ts";
 
 const sse = (...lines: string[]) => new Response(new Blob([lines.map((l) => `data: ${l}\n\n`).join("")]).stream(), { status: 200 });
@@ -115,4 +115,29 @@ describe("failover chain", () => {
     const none = createFailoverChain([fake("kiro", async function* () {}, false)]);
     await expect(collect(none.chat({ messages: [] }))).rejects.toThrow(/No provider is signed in/);
   });
+});
+
+describe("sessionModels", () => {
+  it("reads Kiro's models block", () => {
+    expect(sessionModels({ models: { availableModels: [{ modelId: "a", name: "A" }] } })).toEqual([{ id: "a", name: "A" }]);
+  });
+  it("reads OpenCode's model config option, flat or grouped", () => {
+    const option = (options: unknown[]) => ({ configOptions: [{ id: "x", category: "other" }, { id: "model", options }] });
+    expect(sessionModels(option([{ value: "opencode/a", name: "A" }]))).toEqual([{ id: "opencode/a", name: "A" }]);
+    expect(sessionModels(option([{ group: "g", options: [{ value: "b" }] }]))).toEqual([{ id: "b", name: "b" }]);
+  });
+  it("is empty when the agent offers none", () => {
+    expect(sessionModels({})).toEqual([]);
+  });
+});
+
+// Opt-in: SA_REAL_OPENCODE=/path/to/opencode runs a real chat (free OpenCode models need no key).
+describe.skipIf(!process.env.SA_REAL_OPENCODE)("real opencode binary", () => {
+  it("lists models and streams a reply", async () => {
+    const provider = createAcpProvider({ id: "opencode", command: process.env.SA_REAL_OPENCODE!, args: ["acp"] });
+    expect((await provider.listModels()).length).toBeGreaterThan(0);
+    const events = [];
+    for await (const event of provider.chat({ messages: [{ role: "user", content: "say hi" }] })) events.push(event);
+    expect(events.at(-1)).toMatchObject({ type: "done" });
+  }, 120_000);
 });
